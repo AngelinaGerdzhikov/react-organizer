@@ -16,7 +16,6 @@ const WeekListItem: React.FC<{ week: CalendarWeek, offset: number }> = (props) =
           >
             <div className={classes["weekday-date"]}>
               {day.dayOfMonth}
-              {day.dayOfWeekFullName}
             </div>
           </li>
         );

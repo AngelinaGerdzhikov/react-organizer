@@ -1,10 +1,20 @@
 import { Fragment } from 'react';
+import { useParams  } from 'react-router-dom';
 import CalendarMonth from "../models/calendar/calendar-month";
 import MonthNavigation from '../components/calendar/month/MonthNavigation';
 import MonthDetails from '../components/calendar/month/MonthDetails';
 
+interface RouteParams {
+  year: string,
+  month: string
+}
+
 const MonthPage = () => {
-  const month = new CalendarMonth(6, 2021);
+  const params = useParams<RouteParams>();
+  const yearParam = params.year;
+  const monthParam = params.month
+  const month = new CalendarMonth(parseInt(monthParam), parseInt(yearParam));
+
 
   return (
     <Fragment>
