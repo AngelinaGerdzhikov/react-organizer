@@ -1,0 +1,14 @@
+.days-of-week ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.days-of-week li {
+  display: inline-block;
+  width: 122px;
+  text-align: center;
+}
+.month ul{
+  list-style: none;
+  padding-left: 0;
+}

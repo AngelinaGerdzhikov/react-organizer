@@ -1,0 +1,18 @@
+.offset {
+  float: left;
+  height: 100px;
+}
+
+.week {
+  list-style: none;
+  padding-left: 0;
+  width: 854px;
+}
+
+.weekday {
+  border: 1px solid black;
+  height: 100px;
+  width: 100px;
+  float: left;
+  padding: 10px;
+}
