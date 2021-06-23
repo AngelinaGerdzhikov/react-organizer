@@ -1,6 +1,6 @@
 import CalendarDay from './calendar-day';
 import CalendarWeek from './calendar-week';
-import Year from './calendar-year';
+import CalendarYear from './calendar-year';
 import monthToDaysMap from './month-to-days.map';
 import monthToNameMap from './month-to-name.map';
 
@@ -26,7 +26,7 @@ export class CalendarMonth {
   }
 
   private getNumberOfDaysInMonth() {
-    const isLeapYear = new Year(this.year).isYearALeapYear;
+    const isLeapYear = CalendarYear.getIsYearALeapYear(this.year);
   
     if (this.month === 1 || isLeapYear) {
       return 29;
@@ -74,6 +74,20 @@ export class CalendarMonth {
   
   getWeekOfMonth = (numberOfWeek: number) => {
     return this.monthDatesInWeeks[numberOfWeek];
+  }
+
+  getWeekContainingADay = (dayOfMonth: number): [weekNumber: number, week: CalendarWeek] => {
+    let weekNumber = 0;
+    const week = this.monthDatesInWeeks.filter(w =>  {
+      return w.days.find(day => {
+        if (day) {
+          weekNumber = day.dayOfMonth === dayOfMonth ? dayOfMonth : weekNumber;
+          return day.dayOfMonth === dayOfMonth;
+        }
+        return false;
+      });
+    })[0];
+    return [weekNumber, week];
   }
 }
 

@@ -1,12 +1,16 @@
 import YearPage from "./pages/YearPage";
 import MonthPage from './pages/MonthPage';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { RootState, useAppSelector } from "./store";
 
 function App() {
+  const currentYear = useAppSelector((state => state.calendar.currentYearNumber));
+  const currentMonth = useAppSelector((state => state.calendar.currentMonthNumber));
+
   return (
     <Switch>
       <Route path="/" exact>
-        <Redirect to={"/year/2021/month/5"} />
+        <Redirect to={`/year/${currentYear}/month/${currentMonth}`} />
       </Route>
      <Route path={'/year/:year'} exact><YearPage /></Route>
      <Route path={'/year/:year/month/:month'}><MonthPage /></Route>
