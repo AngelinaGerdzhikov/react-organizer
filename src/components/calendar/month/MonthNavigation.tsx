@@ -1,17 +1,27 @@
-import { useAppDispatch } from "../../../hooks/store-hooks";
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../hooks/store-hooks";
 import { calendarActions } from "../../../store/calendar-slice";
 
 const MonthNavigation: React.FC<{ monthName: string; year: number }> = (
   props
 ) => {
+  const history = useHistory();
   const dispatch = useAppDispatch();
+  const currentYearNumber = useAppSelector(state => state.calendar.currentYearNumber);
+  const currentMonthNumber = useAppSelector(state => state.calendar.currentMonthNumber);
+
+  useEffect(() => {
+    history.push(`/year/${currentYearNumber}/month/${currentMonthNumber}`);
+  }, [currentYearNumber, currentMonthNumber]);
 
   const getPreviousMonthHandler = () => {
-    console.log('Get previous month');
+    dispatch(calendarActions.getPreviousMonth({}));
   }
 
   const getNextMonthHandler = () => {
-    // dispatch(calendarActions.getNextMonth({}))
+    dispatch(calendarActions.getNextMonth({}));
+
   }
 
   return (
