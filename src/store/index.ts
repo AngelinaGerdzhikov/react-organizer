@@ -1,6 +1,5 @@
-import { configureStore} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import calendarSlice from './calendar-slice';
-import { TypedUseSelectorHook, useSelector } from 'react-redux'
 
 const store = configureStore({
   reducer: {
@@ -9,6 +8,6 @@ const store = configureStore({
 });
 
 export type RootState = ReturnType<typeof store.getState>;
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export type AppDispatch = typeof store.dispatch;
 
 export default store;

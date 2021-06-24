@@ -1,8 +1,9 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useParams  } from 'react-router-dom';
 import CalendarMonth from "../models/calendar/calendar-month";
 import MonthNavigation from '../components/calendar/month/MonthNavigation';
 import MonthDetails from '../components/calendar/month/MonthDetails';
+import {useAppSelector } from '../hooks/store-hooks';
 
 interface RouteParams {
   year: string,
@@ -14,7 +15,6 @@ const MonthPage = () => {
   const yearParam = params.year;
   const monthParam = params.month
   const month = new CalendarMonth(parseInt(monthParam), parseInt(yearParam));
-
 
   return (
     <Fragment>

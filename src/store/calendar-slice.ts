@@ -22,8 +22,10 @@ const calendarSlice = createSlice({
       state.currentMonth = state.currentYear.calendarMonths[nextMonthNumber];
       state.currentWeekNumber = 0;
       state.currentWeek = state.currentMonth.monthDatesInWeeks[state.currentWeekNumber];   
+      console.log(state);
     }
   }
 });
 
+export const calendarActions = calendarSlice.actions;
 export default calendarSlice;

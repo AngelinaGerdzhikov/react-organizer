@@ -1,7 +1,7 @@
 import YearPage from "./pages/YearPage";
 import MonthPage from './pages/MonthPage';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { RootState, useAppSelector } from "./store";
+import { useAppSelector } from "./hooks/store-hooks";
 
 function App() {
   const currentYear = useAppSelector((state => state.calendar.currentYearNumber));

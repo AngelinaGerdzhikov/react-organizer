@@ -1,12 +1,17 @@
+import { useAppDispatch } from "../../../hooks/store-hooks";
+import { calendarActions } from "../../../store/calendar-slice";
+
 const MonthNavigation: React.FC<{ monthName: string; year: number }> = (
   props
 ) => {
+  const dispatch = useAppDispatch();
+
   const getPreviousMonthHandler = () => {
     console.log('Get previous month');
   }
 
   const getNextMonthHandler = () => {
-    console.log('Get next month')
+    // dispatch(calendarActions.getNextMonth({}))
   }
 
   return (
