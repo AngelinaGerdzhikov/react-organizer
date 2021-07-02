@@ -28,7 +28,8 @@ const calendarSlice = createSlice({
       return {
         ...state,
         currentMonthNumber: action.payload.monthNumber,
-        currentYearNumber: action.payload.yearNumber
+        currentYearNumber: action.payload.yearNumber,
+        currentWeekNumber: action.payload.weekNumber || 0
       }
     },
     getPreviousYear(state, action) {

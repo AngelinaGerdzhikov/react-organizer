@@ -55,7 +55,8 @@ class CalendarCreator {
       }
   
       if (weekDates.length > 0) {
-        monthDatesInWeeks.push(new CalendarWeek(weekDates));
+        const nthWeekOfMonth = monthDatesInWeeks.length;
+        monthDatesInWeeks.push(new CalendarWeek(weekDates, nthWeekOfMonth));
         i--;
       }
     }

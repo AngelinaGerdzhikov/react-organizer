@@ -9,22 +9,23 @@ const WeekList: React.FC<{ month: CalendarMonth }> = (props) => {
     <React.Fragment>
       <nav className={classes["days-of-week"]}>
         <ul>
+          <li>Sunday</li>
           <li>Monday</li>
           <li>Tueday</li>
           <li>Wednsday</li>
           <li>Thursday</li>
           <li>Friday</li>
           <li>Saturday</li>
-          <li>Sunday</li>
         </ul>
       </nav>
       <section className={classes.month}>
         <ul className={classes["month-weeks"]}>
           {props.month.monthDatesInWeeks.map((week, weekIndex) => {
-            const firstDayOfWeekOffset =
-              week.firstDayOfWeek === 0
-                ? 6 * 122
-                : (week.firstDayOfWeek - 1) * 122;
+            // const firstDayOfWeekOffset =
+            //   week.firstDayOfWeekNumber === 0
+            //     ? 6 * 122
+            //     : (week.firstDayOfWeekNumber - 1) * 122;
+            const firstDayOfWeekOffset = week.firstDayOfWeekNumber * 122;
 
             return (
               <li key={weekIndex}>
