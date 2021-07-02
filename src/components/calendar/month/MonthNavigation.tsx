@@ -1,36 +1,60 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../../hooks/store-hooks";
+import { useHistory, useParams } from "react-router-dom";
+import { useAppDispatch } from "../../../hooks/store-hooks";
+import CalendarMonth from "../../../models/calendar/calendar-month";
 import { calendarActions } from "../../../store/calendar-slice";
+
+interface RouteParams {
+  year: string;
+  month: string;
+}
 
 const MonthNavigation: React.FC<{ monthName: string; year: number }> = (
   props
 ) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const currentYearNumber = useAppSelector(state => state.calendar.currentYearNumber);
-  const currentMonthNumber = useAppSelector(state => state.calendar.currentMonthNumber);
+  const params = useParams<RouteParams>();
+  const currentYearNumberParam = params.year;
+  const currentMonthNumberParam = params.month;
 
   useEffect(() => {
-    history.push(`/year/${currentYearNumber}/month/${currentMonthNumber}`);
-  }, [currentYearNumber, currentMonthNumber]);
+    dispatch(
+      calendarActions.setCurrent({
+        monthNumber: currentMonthNumberParam,
+        yearNumber: currentYearNumberParam,
+      })
+    );
+  }, [currentMonthNumberParam, currentYearNumberParam]);
 
   const getPreviousMonthHandler = () => {
-    dispatch(calendarActions.getPreviousMonth({}));
-  }
+    const [previousMonthNumber, updatedYear] =
+      CalendarMonth.getPreviousMonthData(
+        +currentMonthNumberParam,
+        +currentYearNumberParam
+      );
+
+    history.push(`/year/${updatedYear}/month/${previousMonthNumber}`);
+  };
 
   const getNextMonthHandler = () => {
-    dispatch(calendarActions.getNextMonth({}));
+    const [nextMonthNumber, updatedYear] =
+      CalendarMonth.getNextMonthData(
+        +currentMonthNumberParam,
+        +currentYearNumberParam
+      );
 
-  }
+    history.push(`/year/${updatedYear}/month/${nextMonthNumber}`);
+  };
 
   return (
     <nav>
-      <button onClick={getPreviousMonthHandler}>{'<'}</button>
+      <button onClick={getPreviousMonthHandler}>{"<"}</button>
       <h1>
         {props.monthName} {props.year}
-      </h1>  
-      <button onClick={getNextMonthHandler}>{'>'}</button>
+      </h1>
+      <button onClick={getNextMonthHandler}>{">"}</button>
     </nav>
   );
 };

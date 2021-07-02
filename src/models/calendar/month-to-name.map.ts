@@ -1,6 +1,6 @@
 const MonthToNameMap = new Map();
 
-MonthToNameMap.set('0', 'JANUARY');
+MonthToNameMap.set('0', 'January');
 MonthToNameMap.set('1', 'February');
 MonthToNameMap.set('2', 'March');
 MonthToNameMap.set('3', 'April');

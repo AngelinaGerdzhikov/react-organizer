@@ -1,16 +1,11 @@
 interface CalendarState {
-  currentYearNumber: number,
-  currentMonthNumber: number
+  currentYearNumber: number | string,
+  currentMonthNumber: number | string
 };
 
-const today = new Date();
-const currentYearNumber = today.getUTCFullYear();
-const currentMonthNumber = today.getUTCMonth();
-
-
 export const InitialCalendarState: CalendarState = {
-  currentYearNumber,
-  currentMonthNumber
+  currentYearNumber: '',
+  currentMonthNumber: ''
 }
 
 export default CalendarState;

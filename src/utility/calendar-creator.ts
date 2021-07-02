@@ -16,7 +16,7 @@ class CalendarCreator {
   static getNumberOfDaysInMonth(month: number, year: number) {
     const isLeapYear = CalendarCreator.getIsYearALeapYear(year);
   
-    if (month === 1 || isLeapYear) {
+    if (month === 1 && isLeapYear) {
       return 29;
     } else {
       return monthToDaysMap.get([month].toString());

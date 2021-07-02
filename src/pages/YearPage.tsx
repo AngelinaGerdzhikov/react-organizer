@@ -1,10 +1,18 @@
+import { Fragment } from 'react';
 import CalendarYear from '../models/calendar/calendar-year';
+import YearNavigation from '../components/calendar/year/YearNavigation';
+import YearDetails from '../components/calendar/year/YearDetails';
+import { useAppSelector } from '../hooks/store-hooks';
 
 const YearPage = () => {
-  const year = new CalendarYear(2021);
+  const yearNumber = useAppSelector(state => state.calendar.currentYearNumber);
+  const year = new CalendarYear(+yearNumber);
   
   return (
-    <h1>{year.yearNumber}</h1>
+    <Fragment>
+      <YearNavigation></YearNavigation>
+      <YearDetails months={year.calendarMonths} year={year}/>
+    </Fragment>
   );
 }
 

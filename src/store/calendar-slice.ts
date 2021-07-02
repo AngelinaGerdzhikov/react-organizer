@@ -24,12 +24,18 @@ const calendarSlice = createSlice({
 
       state.currentMonthNumber = nextMonthNumber;
     },
-    setCurrentMonth(state, action) {
+    setCurrent(state, action) {
       return {
         ...state,
         currentMonthNumber: action.payload.monthNumber,
         currentYearNumber: action.payload.yearNumber
       }
+    },
+    getPreviousYear(state, action) {
+      state.currentYearNumber = +state.currentYearNumber - 1;
+    },
+    getNextYear(state, action) {
+      state.currentYearNumber =  +state.currentYearNumber + 1;
     }
   }
 });
