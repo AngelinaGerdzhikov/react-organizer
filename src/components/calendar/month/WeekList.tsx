@@ -21,10 +21,6 @@ const WeekList: React.FC<{ month: CalendarMonth }> = (props) => {
       <section className={classes.month}>
         <ul className={classes["month-weeks"]}>
           {props.month.monthDatesInWeeks.map((week, weekIndex) => {
-            // const firstDayOfWeekOffset =
-            //   week.firstDayOfWeekNumber === 0
-            //     ? 6 * 122
-            //     : (week.firstDayOfWeekNumber - 1) * 122;
             const firstDayOfWeekOffset = week.firstDayOfWeekNumber * 122;
 
             return (

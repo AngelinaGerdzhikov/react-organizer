@@ -5,20 +5,25 @@ const WeekListItem: React.FC<{ week: CalendarWeek, offset: number }> = (props) =
   return (
     <ul className={classes.week}>
       <li style={{width: `${props.offset}px`}} className={classes.offset}></li>
-      {props.week.days.map((day, dayIndex) => {        
-        return (
-          <li
-            key={dayIndex}
-            className={`
-              ${classes.weekday}
-              ${day.isWeekend && classes.weekend}
-              ${day.dayOfWeekFullName.toLowerCase()}`}
-          >
-            <div className={classes["weekday-date"]}>
-              {day.dayOfMonth}
-            </div>
-          </li>
-        );
+      {props.week.days.map((day, dayIndex) => {   
+
+        if (day) {
+          return (
+            <li
+              key={dayIndex}
+              className={`
+                ${classes.weekday}
+                ${day.isWeekend && classes.weekend}
+                ${day.dayOfWeekFullName.toLowerCase()}`}
+            >
+              <div className={classes["weekday-date"]}>
+                {day.dayOfMonth}
+              </div>
+            </li>
+          );
+        }
+
+        return '';
       })}
     </ul>
   );

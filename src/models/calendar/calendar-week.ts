@@ -12,7 +12,7 @@ class CalendarWeek {
     this.firstDayOfWeek = days.filter(day => day !== null)[0];
     this.firstDayOfWeekNumber = days.filter(day => day !== null)[0].dayOfWeek;
     this.firstDayOfWeekFullName = days.filter(day => day !== null)[0].dayOfWeekFullName;
-    this.month = this.firstDayOfWeek.dayOfMonth;
+    this.month = this.firstDayOfWeek.month;
     this.year = this.firstDayOfWeek.year;
     this.dateRange = `${this.firstDayOfWeek.dayOfMonth} - ${days[days.length - 1].dayOfMonth}`;
   }
