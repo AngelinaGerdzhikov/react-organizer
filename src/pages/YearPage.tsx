@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import YearDetails from '../components/calendar/year/YearDetails';
 import YearNavigation from '../components/calendar/year/YearNavigation';
@@ -12,7 +12,15 @@ interface RouteParams {
 const YearPage = () => {
   const params = useParams<RouteParams>();
   const currentYearNumberParam = params.year;
-  const year = new CalendarYear(+currentYearNumberParam);
+  const yearStorage = localStorage.getItem(currentYearNumberParam);
+  const year: CalendarYear = yearStorage ? JSON.parse(yearStorage) : new CalendarYear(+currentYearNumberParam);
+
+  useEffect(() => {
+    if (!yearStorage) {
+      localStorage.setItem(currentYearNumberParam, JSON.stringify(year));
+    } 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentYearNumberParam]);
   
   return (
     <Fragment>
