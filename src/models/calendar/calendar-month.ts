@@ -28,6 +28,7 @@ export class CalendarMonth {
       this.year
     );
     this.monthFullName = monthToNameMap.get(this.month.toString());
+    this.numberOfWeeksInMonth = this.monthDatesInWeeks.length;
   }
 
   static getPreviousMonthData(

@@ -16,6 +16,10 @@ class CalendarWeek {
     this.year = this.firstDayOfWeek.year;
     this.dateRange = `${this.firstDayOfWeek.dayOfMonth} - ${days[days.length - 1].dayOfMonth}`;
   }
+
+  static getPreviousWeekData(year: number, month: number, week: number) {
+    
+  }
 }
 
 export default CalendarWeek;

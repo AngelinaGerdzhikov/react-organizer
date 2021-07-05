@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import calendarSlice from './calendar-slice';
+import taskSlice from './task-slice';
 
 const store = configureStore({
   reducer: {
-    calendar: calendarSlice.reducer
+    task: taskSlice.reducer
   }
 });
 

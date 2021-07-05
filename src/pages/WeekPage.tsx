@@ -1,19 +1,26 @@
 import { Fragment } from 'react';
-import { useAppSelector } from "../hooks/store-hooks"
-import CalendarMonth from "../models/calendar/calendar-month";
+import { useParams } from 'react-router-dom';
 import WeekNavigation from '../components/calendar/week/WeekNavigation';
+import CalendarMonth from "../models/calendar/calendar-month";
+
+interface RouteParams {
+  year: string,
+  month: string,
+  week: string
+}
 
 const WeekPage = () => {
-  const currentYearNumber = useAppSelector(state => +state.calendar.currentYearNumber);
-  const currentMonthNumber = useAppSelector(state => +state.calendar.currentMonthNumber);
-  const currentWeekNumber = useAppSelector(state => +state.calendar.currentWeekNumber);
+  const params = useParams<RouteParams>();
+  const currentYearNumberParam = +params.year;
+  const currentMonthNumberParam = +params.month;
+  const currentWeekNumberParam = +params.week;
 
-  const month = new CalendarMonth(currentMonthNumber, currentYearNumber);
-  const week = month.monthDatesInWeeks[currentWeekNumber];
+  const month = new CalendarMonth(currentMonthNumberParam, currentYearNumberParam);
+  const week = month.monthDatesInWeeks[currentWeekNumberParam];
 
   return (
     <Fragment>
-      <WeekNavigation month={month}/>  
+      <WeekNavigation month={month} weekIndex={currentWeekNumberParam}/>  
       <ul>
         {week.days.map((day) => {
             return day ? <li key={day.date.toISOString()}>{day.dayOfWeekFullName}</li> : '';

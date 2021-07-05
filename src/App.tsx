@@ -1,33 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
-import { Redirect, Route, Switch, useLocation, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "./hooks/store-hooks";
+import { Redirect, Route, Switch } from "react-router-dom";
 import MonthPage from "./pages/MonthPage";
-import YearPage from "./pages/YearPage";
 import WeekPage from './pages/WeekPage';
-import { calendarActions } from "./store/calendar-slice";
+import YearPage from "./pages/YearPage";
 
-function App() {
-  const location = useLocation();
-  const dispatch = useAppDispatch();
-  const currentYearNumber = useAppSelector((state) => state.calendar.currentYearNumber);
-  
+function App() {  
   const today = new Date();
   const todayYearNumber = today.getUTCFullYear();
-  const todayMonthNumber = today.getUTCMonth();
-
-  useEffect(() => {
-    if (location.pathname === '/') {      
-      dispatch(
-        calendarActions.setCurrent({ monthNumber: todayMonthNumber, yearNumber: todayYearNumber })
-        );
-      }
-  }, []);
 
   return (
     <Switch>
       <Route path="/" exact>
-        <Redirect to={`/year/${currentYearNumber}`} />
+        <Redirect to={`/year/${todayYearNumber}`} />
       </Route>
       <Route path={"/year/:year"} exact>
         <YearPage />

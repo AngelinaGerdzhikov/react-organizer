@@ -1,55 +1,23 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useAppDispatch } from "../../../hooks/store-hooks";
+import React from "react";
+import { useHistory } from "react-router-dom";
 import CalendarMonth from "../../../models/calendar/calendar-month";
 import CalendarWeek from "../../../models/calendar/calendar-week";
-import { calendarActions } from "../../../store/calendar-slice";
 
-interface RouteParams {
-  year: string,
-  month: string,
-  week: string
-}
-
-const WeekNavigation:React.FC<{ month: CalendarMonth}> = (props) => {
-  const dispatch = useAppDispatch();
-  const params = useParams<RouteParams>();
-  const currentYearNumberParam = +params.year;
-  const currentMonthNumberParam = +params.month;
-  const currentWeekNumberParam = +params.week;
-  const week: CalendarWeek = props.month.monthDatesInWeeks[currentWeekNumberParam];
-
-  useEffect(() => {
-    dispatch(
-      calendarActions.setCurrent({
-        monthNumber: currentMonthNumberParam,
-        yearNumber: currentYearNumberParam,
-        weekNumber: currentWeekNumberParam
-      })
-    );
-  }, [currentMonthNumberParam, currentYearNumberParam, currentWeekNumberParam]);
-
+const WeekNavigation:React.FC<{ month: CalendarMonth, weekIndex: number}> = (props) => {
+  const history = useHistory();
+  const week: CalendarWeek = props.month.monthDatesInWeeks[props.weekIndex];
 
   const getPreviousWeekHandler = () => {
-    // const [previousMonthNumber, updatedYear] =
-    //   CalendarMonth.getPreviousMonthData(
-    //     +currentMonthNumberParam,
-    //     +currentYearNumberParam
-    //   );
-
-    // history.push(`/year/${updatedYear}/month/${previousMonthNumber}`);
+    if (props.month.monthDatesInWeeks[props.weekIndex - 1]) {
+      history.push(`/year/${props.month.year}/month/${props.month.month}/week/${props.weekIndex - 1}`)
+    } else if ((props.weekIndex - 1) < 0) {
+      const [updatedMonth, updatedYear] = CalendarMonth.getPreviousMonthData(props.month.month, props.month.year);
+      const prevMonth = new CalendarMonth(updatedMonth, updatedYear);
+      history.push(`/year/${updatedYear}/month/${updatedMonth}/week/${+prevMonth.numberOfWeeksInMonth - 1}`);
+    }
   };
 
-  const getNextWeekhHandler = () => {
-    // const [nextMonthNumber, updatedYear] =
-    //   CalendarMonth.getNextMonthData(
-    //     +currentMonthNumberParam,
-    //     +currentYearNumberParam
-    //   );
-
-    // history.push(`/year/${updatedYear}/month/${nextMonthNumber}`);
-  };
+  const getNextWeekhHandler = () => {  };
 
   return (
     <nav>
