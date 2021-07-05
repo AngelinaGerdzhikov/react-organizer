@@ -1,8 +1,8 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 import WeekNavigation from "../components/calendar/week/WeekNavigation";
 import CalendarMonth from "../models/calendar/calendar-month";
-import CalendarYear from "../models/calendar/calendar-year";
+import { getYearFromStorage } from "../utility/local-storage-manager";
 
 interface RouteParams {
   year: string;
@@ -12,33 +12,20 @@ interface RouteParams {
 
 const WeekPage = () => {
   const params = useParams<RouteParams>();
-  const currentYearNumberParam = params.year;
-  const currentMonthNumberParam = +params.month;
-  const currentWeekNumberParam = +params.week;
-
-  const yearStorage = localStorage.getItem(currentYearNumberParam);
-  const year: CalendarYear = yearStorage
-    ? JSON.parse(yearStorage)
-    : new CalendarYear(+currentYearNumberParam);
-  let month: CalendarMonth = year?.calendarMonths[+currentMonthNumberParam];
-  const week = month.monthDatesInWeeks[currentWeekNumberParam];
-
-  useEffect(() => {
-    if (!yearStorage) {
-      localStorage.setItem(currentYearNumberParam, JSON.stringify(year));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentYearNumberParam]);
+  const yearParam = +params.year;
+  const monthParam = +params.month;
+  const weekParam = +params.week;
+  const year = getYearFromStorage(yearParam);
+  const month: CalendarMonth = year?.calendarMonths[monthParam];
+  const week = month.monthDatesInWeeks[weekParam];
 
   return (
     <Fragment>
-      <WeekNavigation month={month} weekIndex={currentWeekNumberParam} />
+      <WeekNavigation month={month} weekIndex={weekParam} />
       <ul>
         {week.days.map((day, dayIndex) => {
           if (day) {
-            return (
-              <li key={dayIndex}>{day.dayOfWeekFullName}</li>
-            );
+            return <li key={dayIndex}>{day.dayOfWeekFullName}</li>;
           }
 
           return "";

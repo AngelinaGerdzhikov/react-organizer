@@ -1,10 +1,10 @@
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 import MonthDetails from "../components/calendar/month/MonthDetails";
 import MonthNavigation from "../components/calendar/month/MonthNavigation";
 import MonthSidebar from "../components/calendar/month/MonthSidebar";
 import CalendarMonth from "../models/calendar/calendar-month";
-import CalendarYear from "../models/calendar/calendar-year";
+import { getYearFromStorage } from "../utility/local-storage-manager";
 
 interface RouteParams {
   year: string;
@@ -13,23 +13,11 @@ interface RouteParams {
 
 const MonthPage = () => {
   const params = useParams<RouteParams>();
-  const currentYearNumberParam = params.year;
-  const currentMonthNumberParam = params.month;
-
-  const yearStorage = localStorage.getItem(currentYearNumberParam);
-  const year: CalendarYear = yearStorage
-    ? JSON.parse(yearStorage)
-    : new CalendarYear(+currentYearNumberParam);
-  let month: CalendarMonth = year?.calendarMonths[+currentMonthNumberParam];
-
-  useEffect(() => {
-
-    if (!yearStorage) {
-      localStorage.setItem(currentYearNumberParam, JSON.stringify(year));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentYearNumberParam]);
-
+  const yearParam = params.year;
+  const monthParam = params.month;
+  const year = getYearFromStorage(+yearParam);
+  let month: CalendarMonth = year?.calendarMonths[+monthParam];
+  
   return (
     <Fragment>
       <MonthNavigation month={month} />

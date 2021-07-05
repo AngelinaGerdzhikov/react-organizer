@@ -2,38 +2,33 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import CalendarMonth from "../../../models/calendar/calendar-month";
 import CalendarWeek from "../../../models/calendar/calendar-week";
-import CalendarYear from "../../../models/calendar/calendar-year";
+import { getYearFromStorage } from "../../../utility/local-storage-manager";
 
-const WeekNavigation:React.FC<{ month: CalendarMonth, weekIndex: number}> = (props) => {
+const WeekNavigation: React.FC<{ month: CalendarMonth; weekIndex: number }> = (
+  props
+) => {
   const history = useHistory();
   const week: CalendarWeek = props.month.monthDatesInWeeks[props.weekIndex];
+  const { month, year } = props.month;
 
   const getPreviousWeekHandler = () => {
     if (props.month.monthDatesInWeeks[props.weekIndex - 1]) {
-      history.push(`/year/${props.month.year}/month/${props.month.month}/week/${props.weekIndex - 1}`)
-    } else if ((props.weekIndex - 1) < 0) {
-      const [updatedMonth, updatedYear] = CalendarMonth.getPreviousMonthData(props.month.month, props.month.year);
-
-      const yearStorage = localStorage.getItem(updatedYear.toString());
-      const year:CalendarYear = yearStorage ? JSON.parse(yearStorage) : new CalendarYear(updatedYear);
-      localStorage.setItem(updatedYear.toString(), JSON.stringify(year));
-
-      const prevMonth = year.calendarMonths[updatedMonth];
-      history.push(`/year/${updatedYear}/month/${updatedMonth}/week/${+prevMonth.numberOfWeeksInMonth - 1}`);
+      history.push(`/year/${year}/month/${month}/week/${props.weekIndex - 1}`);
+    } else {
+      const [updatedMonthNumber, updatedYearNumber] = CalendarMonth.getPreviousMonthData(month, year);
+      const updatedYear = getYearFromStorage(updatedYearNumber);
+      const updatedWeekNumber = updatedYear.calendarMonths[updatedMonthNumber].numberOfWeeksInMonth - 1;
+      history.push(`/year/${updatedYearNumber}/month/${updatedMonthNumber}/week/${updatedWeekNumber}`);
     }
   };
 
-  const getNextWeekhHandler = () => { 
+  const getNextWeekhHandler = () => {
     if (props.month.monthDatesInWeeks[props.weekIndex + 1]) {
-      history.push(`/year/${props.month.year}/month/${props.month.month}/week/${props.weekIndex + 1}`)
+      history.push(`/year/${year}/month/${month}/week/${props.weekIndex + 1}`);
     } else {
-      const [updatedMonth, updatedYear] = CalendarMonth.getNextMonthData(props.month.month, props.month.year);
-
-      const yearStorage = localStorage.getItem(updatedYear.toString());
-      const year:CalendarYear = yearStorage ? JSON.parse(yearStorage) : new CalendarYear(updatedYear);
-      localStorage.setItem(updatedYear.toString(), JSON.stringify(year));
-
-      history.push(`/year/${updatedYear}/month/${updatedMonth}/week/0`);
+      const [updatedMonthNumber, updatedYearNumber] = CalendarMonth.getNextMonthData(month, year);
+      const updatedYear = getYearFromStorage(updatedYearNumber);
+      history.push(`/year/${updatedYear.yearNumber}/month/${updatedMonthNumber}/week/0`);
     }
   };
 
@@ -45,7 +40,7 @@ const WeekNavigation:React.FC<{ month: CalendarMonth, weekIndex: number}> = (pro
       </h1>
       <button onClick={getNextWeekhHandler}>{">"}</button>
     </nav>
-  )
-}
+  );
+};
 
 export default WeekNavigation;
