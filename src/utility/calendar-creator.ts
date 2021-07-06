@@ -72,16 +72,25 @@ class CalendarCreator {
     if (leadingDays > 0) {
       const [prevMonthNumber, prevMonthYearNumber] = CalendarMonth.getPreviousMonthData(month.month, month.year);
       const numberOfDaysInMonth = monthToDaysMap.get(prevMonthNumber.toString());
-
       
       for (let i = 0; i <= leadingDays; i++) {
-
         const prevMonthDay = new Date(prevMonthYearNumber, prevMonthNumber, numberOfDaysInMonth - i);
         month.monthDatesInWeeks[0].days[leadingDays - (i + 1)] = new CalendarDay(prevMonthDay);
-        console.log(month);
       }
     }
+  }
 
+  static getFollowingDaysFromNextMonth(month: CalendarMonth) {
+    const followingDays = month.lastDayOfMonth.getDay();
+
+    if (followingDays < 6) {
+      const [nextMonthNumber, nextMonthYearNumber] = CalendarMonth.getNextMonthData(month.month, month.year);
+      
+      for (let i = 1; i <= 6 - followingDays; i++) {
+        const nextMonthDay = new Date(nextMonthYearNumber, nextMonthNumber, i);
+        month.monthDatesInWeeks[month.monthDatesInWeeks.length - 1].days[followingDays + i] = new CalendarDay(nextMonthDay);
+      }
+    }
   }
 
   static getYearInMonths = (year: number): CalendarMonth[] => {
