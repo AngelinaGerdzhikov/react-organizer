@@ -2,6 +2,7 @@ import CalendarDay from "../models/calendar/calendar-day";
 import CalendarMonth from "../models/calendar/calendar-month";
 import CalendarWeek from "../models/calendar/calendar-week";
 import monthToDaysMap from "../models/calendar/month-to-days.map";
+import { getYearFromStorage } from "./local-storage-manager";
 
 class CalendarCreator {
   static getIsYearALeapYear(year: number): boolean {
@@ -63,6 +64,24 @@ class CalendarCreator {
   
 
     return monthDatesInWeeks;
+  }
+
+  static getLeadingDaysFromPreviousMonth(month: CalendarMonth) {
+    const leadingDays = month.firstDayOfMonth.getDay();
+
+    if (leadingDays > 0) {
+      const [prevMonthNumber, prevMonthYearNumber] = CalendarMonth.getPreviousMonthData(month.month, month.year);
+      const numberOfDaysInMonth = monthToDaysMap.get(prevMonthNumber.toString());
+
+      
+      for (let i = 0; i <= leadingDays; i++) {
+
+        const prevMonthDay = new Date(prevMonthYearNumber, prevMonthNumber, numberOfDaysInMonth - i);
+        month.monthDatesInWeeks[0].days[leadingDays - (i + 1)] = new CalendarDay(prevMonthDay);
+        console.log(month);
+      }
+    }
+
   }
 
   static getYearInMonths = (year: number): CalendarMonth[] => {

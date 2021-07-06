@@ -31,7 +31,7 @@ const MonthNavigation: React.FC<{ month: CalendarMonth }> = (
     <nav>
       <button onClick={getPreviousMonthHandler}>{"<"}</button>
       <h1>
-        {props.month.monthName} {props.month.year}
+        {props.month.monthFullName} {props.month.year}
       </h1>
       <button onClick={getNextMonthHandler}>{">"}</button>
     </nav>

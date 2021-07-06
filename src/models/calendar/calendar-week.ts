@@ -1,4 +1,6 @@
+import { getYearFromStorage } from "../../utility/local-storage-manager";
 import CalendarDay from "./calendar-day";
+import CalendarMonth from "./calendar-month";
 
 class CalendarWeek {
   readonly firstDayOfWeek: CalendarDay;
@@ -15,10 +17,26 @@ class CalendarWeek {
     this.month = this.firstDayOfWeek.month;
     this.year = this.firstDayOfWeek.year;
     this.dateRange = `${this.firstDayOfWeek.dayOfMonth} - ${days[days.length - 1].dayOfMonth}`;
+    // this.getLeadingDaysFromPreviousMonth();
   }
 
-  static getPreviousWeekData(year: number, month: number, week: number) {
-    
+  getLeadingDaysFromPreviousMonth() {
+    const leadingDays = (0 - this.firstDayOfWeekNumber) * -1;
+
+    if (leadingDays > 0) {
+      const [prevMonthNumber, prevMonthYearNumber] = CalendarMonth.getPreviousMonthData(this.month, this.year);
+      const prevMonthYear = getYearFromStorage(prevMonthYearNumber);
+      const prevMonth = prevMonthYear.calendarMonths[prevMonthNumber];
+
+      
+      for (let i = 0; i <= leadingDays; i++) {
+        const prevMonthDay = prevMonth.datesInMonth[prevMonth.numberOfDaysInMonth - i];
+        
+        this.days.splice(leadingDays - 1, 0, prevMonthDay);
+        console.log(this.days);
+      }
+    }
+
   }
 }
 

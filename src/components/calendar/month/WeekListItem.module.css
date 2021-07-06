@@ -16,3 +16,7 @@
   float: left;
   padding: 10px;
 }
+
+.weekday:not(.current-month) {
+  opacity: 0.2;
+}
