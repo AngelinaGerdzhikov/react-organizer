@@ -2,7 +2,6 @@ import CalendarDay from "../models/calendar/calendar-day";
 import CalendarMonth from "../models/calendar/calendar-month";
 import CalendarWeek from "../models/calendar/calendar-week";
 import monthToDaysMap from "../models/calendar/month-to-days.map";
-import { getYearFromStorage } from "./local-storage-manager";
 
 class CalendarCreator {
   static getIsYearALeapYear(year: number): boolean {
@@ -41,7 +40,7 @@ class CalendarCreator {
   static getMonthDatesInWeeks = (month: number, year: number) => {
     const numberOfDaysInMonth = CalendarCreator.getNumberOfDaysInMonth(month, year);
     const datesInMonth = CalendarCreator.getDatesInMonth(month, year);
-    const monthDatesInWeeks: CalendarWeek[] = [];
+    const monthDatesInWeeks: CalendarDay[][] = [];
   
     for (let i = 0; i < numberOfDaysInMonth; i++) {
       let weekDates: CalendarDay[] = [];
@@ -56,39 +55,45 @@ class CalendarCreator {
       }
   
       if (weekDates.length > 0) {
-        const nthWeekOfMonth = monthDatesInWeeks.length;
-        monthDatesInWeeks.push(new CalendarWeek(weekDates, nthWeekOfMonth));
+        monthDatesInWeeks.push(weekDates);
         i--;
       }
     }
-  
 
-    return monthDatesInWeeks;
+    CalendarCreator.getLeadingDaysFromPreviousMonth(datesInMonth[0], monthDatesInWeeks);
+    CalendarCreator.getFollowingDaysFromNextMonth(datesInMonth[datesInMonth.length - 1], monthDatesInWeeks);
+
+    const updatedMonthDatesInWeeks = monthDatesInWeeks.map((week: CalendarDay[], weekIndex) => {
+      return new CalendarWeek(month, year, week, weekIndex);
+    })
+
+
+    return updatedMonthDatesInWeeks;
   }
 
-  static getLeadingDaysFromPreviousMonth(month: CalendarMonth) {
-    const leadingDays = month.firstDayOfMonth.getDay();
+  private static getLeadingDaysFromPreviousMonth(firstDayOfMonth: CalendarDay, monthDatesInWeeks: CalendarDay[][]) {
+    const leadingDays = firstDayOfMonth.date.getDay();
 
     if (leadingDays > 0) {
-      const [prevMonthNumber, prevMonthYearNumber] = CalendarMonth.getPreviousMonthData(month.month, month.year);
+      const [prevMonthNumber, prevMonthYearNumber] = CalendarMonth.getPreviousMonthData(firstDayOfMonth.month, firstDayOfMonth.year);
       const numberOfDaysInMonth = monthToDaysMap.get(prevMonthNumber.toString());
       
       for (let i = 0; i <= leadingDays; i++) {
         const prevMonthDay = new Date(prevMonthYearNumber, prevMonthNumber, numberOfDaysInMonth - i);
-        month.monthDatesInWeeks[0].days[leadingDays - (i + 1)] = new CalendarDay(prevMonthDay);
+        monthDatesInWeeks[0][leadingDays - (i + 1)] = new CalendarDay(prevMonthDay);
       }
     }
   }
 
-  static getFollowingDaysFromNextMonth(month: CalendarMonth) {
-    const followingDays = month.lastDayOfMonth.getDay();
+  private static getFollowingDaysFromNextMonth(lastDayOfMonth: CalendarDay, monthDatesInWeeks: CalendarDay[][]) {
+    const followingDays = lastDayOfMonth.date.getDay();
 
     if (followingDays < 6) {
-      const [nextMonthNumber, nextMonthYearNumber] = CalendarMonth.getNextMonthData(month.month, month.year);
+      const [nextMonthNumber, nextMonthYearNumber] = CalendarMonth.getNextMonthData(lastDayOfMonth.month, lastDayOfMonth.year);
       
       for (let i = 1; i <= 6 - followingDays; i++) {
         const nextMonthDay = new Date(nextMonthYearNumber, nextMonthNumber, i);
-        month.monthDatesInWeeks[month.monthDatesInWeeks.length - 1].days[followingDays + i] = new CalendarDay(nextMonthDay);
+        monthDatesInWeeks[monthDatesInWeeks.length - 1][followingDays + i] = new CalendarDay(nextMonthDay);
       }
     }
   }

@@ -4,7 +4,6 @@ import CalendarWeek from "../../../models/calendar/calendar-week";
 const WeekListItem: React.FC<{ week: CalendarWeek }> = (props) => {
   return (
     <ul className={classes.week}>
-      {/* <li style={{width: `${props.offset}px`}} className={classes.offset}></li> */}
       {props.week.days.map((day, dayIndex) => {   
         const isDayInThisMonth = day.month === props.week.month;
 

@@ -29,8 +29,6 @@ export class CalendarMonth {
     );
     this.monthFullName = monthToNameMap.get(this.month.toString());
     this.numberOfWeeksInMonth = this.monthDatesInWeeks.length;
-    CalendarCreator.getLeadingDaysFromPreviousMonth(this);
-    CalendarCreator.getFollowingDaysFromNextMonth(this);
   }
 
   static getPreviousMonthData(

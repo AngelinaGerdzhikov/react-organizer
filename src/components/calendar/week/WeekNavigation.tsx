@@ -36,7 +36,7 @@ const WeekNavigation: React.FC<{ month: CalendarMonth; weekIndex: number }> = (
     <nav>
       <button onClick={getPreviousWeekHandler}>{"<"}</button>
       <h1>
-        {week.dateRange} {props.month.monthFullName}
+        {week.dateRange}
       </h1>
       <button onClick={getNextWeekhHandler}>{">"}</button>
     </nav>
