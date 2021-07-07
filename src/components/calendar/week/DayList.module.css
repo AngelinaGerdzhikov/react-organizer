@@ -1,0 +1,10 @@
+.days-of-week-names ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.days-of-week-names li {
+  display: inline-block;
+  width: 122px;
+  text-align: center;
+}

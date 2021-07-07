@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useHistory } from "react-router-dom";
 import CalendarMonth from "../../../models/calendar/calendar-month";
+import CalendarNavigation from "../../UI/CalendarNavigation";
 
 const MonthNavigation: React.FC<{ month: CalendarMonth }> = (
   props
@@ -28,13 +29,11 @@ const MonthNavigation: React.FC<{ month: CalendarMonth }> = (
   };
 
   return (
-    <nav>
-      <button onClick={getPreviousMonthHandler}>{"<"}</button>
-      <h1>
-        {props.month.monthFullName} {props.month.year}
-      </h1>
-      <button onClick={getNextMonthHandler}>{">"}</button>
-    </nav>
+    <CalendarNavigation
+      title={`${props.month.monthFullName} ${props.month.year}`}
+      onPreviousClick={getPreviousMonthHandler}
+      onNextClick={getNextMonthHandler}
+    />
   );
 };
 

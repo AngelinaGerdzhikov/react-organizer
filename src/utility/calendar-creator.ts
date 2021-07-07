@@ -4,16 +4,34 @@ import CalendarWeek from "../models/calendar/calendar-week";
 import monthToDaysMap from "../models/calendar/month-to-days.map";
 
 class CalendarCreator {
-  static getIsYearALeapYear(year: number): boolean {
-    if (
-      (year % 4 === 0 && year % 100 !== 0) ||
-      year % 400 === 0
-    )
-      return true;
-    return false;
+  private static getLeadingDaysFromPreviousMonth(firstDayOfMonth: CalendarDay, monthDatesInWeeks: CalendarDay[][]) {
+    const leadingDays = firstDayOfMonth.date.getDay();
+
+    if (leadingDays > 0) {
+      const [prevMonthNumber, prevMonthYearNumber] = CalendarMonth.getPreviousMonthData(firstDayOfMonth.month, firstDayOfMonth.year);
+      const numberOfDaysInMonth = monthToDaysMap.get(prevMonthNumber.toString());
+      
+      for (let i = 0; i <= leadingDays; i++) {
+        const prevMonthDay = new Date(prevMonthYearNumber, prevMonthNumber, numberOfDaysInMonth - i);
+        monthDatesInWeeks[0][leadingDays - (i + 1)] = new CalendarDay(prevMonthDay);
+      }
+    }
   }
 
-  static getNumberOfDaysInMonth(month: number, year: number) {
+  private static getFollowingDaysFromNextMonth(lastDayOfMonth: CalendarDay, monthDatesInWeeks: CalendarDay[][]) {
+    const followingDays = lastDayOfMonth.date.getDay();
+
+    if (followingDays < 6) {
+      const [nextMonthNumber, nextMonthYearNumber] = CalendarMonth.getNextMonthData(lastDayOfMonth.month, lastDayOfMonth.year);
+      
+      for (let i = 1; i <= 6 - followingDays; i++) {
+        const nextMonthDay = new Date(nextMonthYearNumber, nextMonthNumber, i);
+        monthDatesInWeeks[monthDatesInWeeks.length - 1][followingDays + i] = new CalendarDay(nextMonthDay);
+      }
+    }
+  }
+
+  public static getNumberOfDaysInMonth(month: number, year: number) {
     const isLeapYear = CalendarCreator.getIsYearALeapYear(year);
   
     if (month === 1 && isLeapYear) {
@@ -23,7 +41,7 @@ class CalendarCreator {
     }
   };
 
-  static getDatesInMonth = (month: number, year: number) => {
+  public static getDatesInMonth = (month: number, year: number) => {
     const numberOfDaysInMonth = CalendarCreator.getNumberOfDaysInMonth(month, year);
     const datesInMonth: CalendarDay[] = [];
  
@@ -37,7 +55,7 @@ class CalendarCreator {
     return datesInMonth;
   }
 
-  static getMonthDatesInWeeks = (month: number, year: number) => {
+  public static getMonthDatesInWeeks = (month: number, year: number) => {
     const numberOfDaysInMonth = CalendarCreator.getNumberOfDaysInMonth(month, year);
     const datesInMonth = CalendarCreator.getDatesInMonth(month, year);
     const monthDatesInWeeks: CalendarDay[][] = [];
@@ -71,34 +89,16 @@ class CalendarCreator {
     return updatedMonthDatesInWeeks;
   }
 
-  private static getLeadingDaysFromPreviousMonth(firstDayOfMonth: CalendarDay, monthDatesInWeeks: CalendarDay[][]) {
-    const leadingDays = firstDayOfMonth.date.getDay();
-
-    if (leadingDays > 0) {
-      const [prevMonthNumber, prevMonthYearNumber] = CalendarMonth.getPreviousMonthData(firstDayOfMonth.month, firstDayOfMonth.year);
-      const numberOfDaysInMonth = monthToDaysMap.get(prevMonthNumber.toString());
-      
-      for (let i = 0; i <= leadingDays; i++) {
-        const prevMonthDay = new Date(prevMonthYearNumber, prevMonthNumber, numberOfDaysInMonth - i);
-        monthDatesInWeeks[0][leadingDays - (i + 1)] = new CalendarDay(prevMonthDay);
-      }
-    }
+  public static getIsYearALeapYear(year: number): boolean {
+    if (
+      (year % 4 === 0 && year % 100 !== 0) ||
+      year % 400 === 0
+    )
+      return true;
+    return false;
   }
 
-  private static getFollowingDaysFromNextMonth(lastDayOfMonth: CalendarDay, monthDatesInWeeks: CalendarDay[][]) {
-    const followingDays = lastDayOfMonth.date.getDay();
-
-    if (followingDays < 6) {
-      const [nextMonthNumber, nextMonthYearNumber] = CalendarMonth.getNextMonthData(lastDayOfMonth.month, lastDayOfMonth.year);
-      
-      for (let i = 1; i <= 6 - followingDays; i++) {
-        const nextMonthDay = new Date(nextMonthYearNumber, nextMonthNumber, i);
-        monthDatesInWeeks[monthDatesInWeeks.length - 1][followingDays + i] = new CalendarDay(nextMonthDay);
-      }
-    }
-  }
-
-  static getYearInMonths = (year: number): CalendarMonth[] => {
+  public static createYear = (year: number): CalendarMonth[] => {
     const calendarMonths: CalendarMonth[] = [];
   
     for (let i = 0; i < 12; i++) {

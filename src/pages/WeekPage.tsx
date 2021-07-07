@@ -1,8 +1,9 @@
-import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 import WeekNavigation from "../components/calendar/week/WeekNavigation";
+import WeekDetails from "../components/calendar/week/WeekDetails";
 import CalendarMonth from "../models/calendar/calendar-month";
 import { getYearFromStorage } from "../utility/local-storage-manager";
+import classes from './Page.module.css';
 
 interface RouteParams {
   year: string;
@@ -20,18 +21,10 @@ const WeekPage = () => {
   const week = month.monthDatesInWeeks[weekParam];
 
   return (
-    <Fragment>
+    <main className={classes.page}>
       <WeekNavigation month={month} weekIndex={weekParam} />
-      <ul>
-        {week.days.map((day, dayIndex) => {
-          if (day) {
-            return <li key={dayIndex}>{day.dayOfWeekFullName}</li>;
-          }
-
-          return "";
-        })}
-      </ul>
-    </Fragment>
+      <WeekDetails week={week}/>
+    </main>
   );
 };
 
