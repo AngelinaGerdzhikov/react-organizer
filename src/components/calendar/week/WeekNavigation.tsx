@@ -40,12 +40,36 @@ const WeekNavigation: React.FC<{ month: CalendarMonth; weekIndex: number }> = (
     }
   };
 
+  const getDateRangeJSX = () => {
+    const isWeekInSameMonth = week.days[0].month === week.days[6].month;
+
+    if (!isWeekInSameMonth) {
+      return (
+        <h1>
+          {week.days[0].dayOfMonth}
+          <span className="cursive">{week.days[0].monthName}</span>
+          -&nbsp;
+          {week.days[6].dayOfMonth}
+          <span className="cursive">{week.days[6].monthName}</span>
+        </h1>
+      );
+    } else {
+      return (
+        <h1>
+          {week.days[0].dayOfMonth} - {week.days[6].dayOfMonth}
+          <span className="cursive"> {week.days[6].monthName}</span>
+        </h1>
+      );
+    }
+  };
+
   return (
     <CalendarNavigation
-      title={week.dateRange}
       onPreviousClick={getPreviousWeekHandler}
       onNextClick={getNextWeekHandler}
-    />
+    >
+      {getDateRangeJSX()}
+    </CalendarNavigation>
   );
 };
 

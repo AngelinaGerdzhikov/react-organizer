@@ -6,16 +6,16 @@ import React from "react";
 
 const WeekList: React.FC<{ month: CalendarMonth }> = (props) => {
   return (
-    <React.Fragment>
+    <article className={classes['month-details']}>
       <nav className={classes["days-of-week"]}>
         <ul>
-          <li>Sunday</li>
-          <li>Monday</li>
-          <li>Tueday</li>
-          <li>Wednsday</li>
-          <li>Thursday</li>
-          <li>Friday</li>
-          <li>Saturday</li>
+          <li><h3>Sunday</h3></li>
+          <li><h3>Monday</h3></li>
+          <li><h3>Tueday</h3></li>
+          <li><h3>Wednsday</h3></li>
+          <li><h3>Thursday</h3></li>
+          <li><h3>Friday</h3></li>
+          <li><h3>Saturday</h3></li>
         </ul>
       </nav>
       <section className={classes.month}>
@@ -32,7 +32,7 @@ const WeekList: React.FC<{ month: CalendarMonth }> = (props) => {
           })}
         </ul>
       </section>
-    </React.Fragment>
+    </article>
   );
 };
 

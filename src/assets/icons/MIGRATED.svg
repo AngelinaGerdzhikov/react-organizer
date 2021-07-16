@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 37.06 25">
+  <defs>
+    <style>.a{fill:#fff;}</style>
+    <symbol id="a" viewBox="0 0 45.72 15.34">
+    <polygon points="17.12 9.25 17.12 15.34 45.72 7.67 17.12 0 17.12 6.08 0 6.08 0 9.25 17.12 9.25"/>
+    </symbol>
+  </defs>
+  <title>Mark task as 'Migrated' and move it to next day</title>
+  <rect x="1.5" y="1.5" width="23" height="23"/>
+  <path d="M47.62,4.61v22h-22v-22h22m1-1h-24v24h24v-24Z" transform="translate(-23.62 -2.61)"/>
+  <rect class="a" x="0.5" y="0.5" width="23" height="23"/>
+  <path d="M46.62,3.61v22h-22v-22h22m1-1h-24v24h24v-24Z" transform="translate(-23.62 -2.61)"/>
+  <use width="45.72" height="15.34" transform="translate(9.79 6.75) scale(0.6 0.7)" xlink:href="#a"/>
+</svg>

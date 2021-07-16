@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+    <defs>
+    <style>
+    .a{fill:#fff;}.b{fill:none;stroke:#000;stroke-miterlimit:10;}</style>
+    </defs>
+  <title>Mark task as 'Completed'</title>
+  <rect x="1.5" y="1.5" width="23" height="23"/>
+  <path d="M47.62,4.61v22h-22v-22h22m1-1h-24v24h24v-24Z" transform="translate(-23.62 -2.61)"/>
+  <rect class="a" x="0.5" y="0.5" width="23" height="23"/>
+  <path d="M46.62,3.61v22h-22v-22h22m1-1h-24v24h24v-24Z" transform="translate(-23.62 -2.61)"/>
+  <line class="b" x1="23.27" y1="0.5" x2="0.64" y2="23.13"/>
+  <path class="b" d="M47.47,10.54,31.26,26.75" transform="translate(-23.62 -2.61)"/>
+  <path class="b" d="M47.41,18.59l-8.15,8.15" transform="translate(-23.62 -2.61)"/>
+  <path class="b" d="M30.89,3.12,24.17,9.83" transform="translate(-23.62 -2.61)"/>
+  <path class="b" d="M38.89,3.12,24.33,17.67" transform="translate(-23.62 -2.61)"/>
+</svg>

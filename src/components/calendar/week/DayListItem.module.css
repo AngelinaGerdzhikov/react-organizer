@@ -1,0 +1,30 @@
+.day {
+  position: relative;
+  background: rgba(250, 250, 250, 0.5);
+  padding: 0.5em;
+  width: calc(100% - 1.5em);
+  margin: 0 0.25em 0 0;
+}
+
+.day:last-of-type {
+  margin-right: 0;
+}
+
+.title {
+  text-align: center;
+  margin: 0;
+  margin: 0 auto 0.8em;
+}
+
+.date {
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 50%;
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  font-size: 0.8em;
+  background: #000;
+  text-align: center;
+  color: #fff;
+}

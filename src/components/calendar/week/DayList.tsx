@@ -1,27 +1,27 @@
 import CalendarWeek from "../../../models/calendar/calendar-week";
-import classes from './DayList.module.css';
+import WeekdayToNameMap from "../../../models/calendar/weekday-to-name.map";
+import classes from "./DayList.module.css";
+import DayListItem from "./DayListItem";
 
 const DayList: React.FC<{ week: CalendarWeek }> = (props) => {
+  // const weekdayNamesJSX = () => {
+  //   const weekNames: string[] = [];
+  //   WeekdayToNameMap.forEach((value) => weekNames.push(value));
+  //   return weekNames.map((weekdayName) => (
+  //     <li>
+  //       <h3>{weekdayName}</h3>
+  //     </li>
+  //   ));
+  // };
+
   return (
     <section>
-      <nav className={classes["days-of-week-names"]}>
-        <ul>
-          <li>Sunday</li>
-          <li>Monday</li>
-          <li>Tueday</li>
-          <li>Wednsday</li>
-          <li>Thursday</li>
-          <li>Friday</li>
-          <li>Saturday</li>
-        </ul>
-      </nav>
-      <ul>
+      {/* <nav className={classes["days-of-week-names"]}>
+        <ul>{weekdayNamesJSX()}</ul>
+      </nav> */}
+      <ul className={classes.weekdays}>
         {props.week.days.map((day, dayIndex) => {
-          if (day) {
-            return <li key={dayIndex}>{day.dayOfMonth} {day.monthName}</li>;
-          }
-
-          return "";
+          return day && <DayListItem day={day} />          
         })}
       </ul>
     </section>
