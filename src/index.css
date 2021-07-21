@@ -2,7 +2,7 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Fashionism Regular', 'Roboto', 'Oxygen',
+  font-family: 'Fashionism Regular', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -17,7 +17,6 @@ h1, h2, h3 {
 
 .cursive {
   font-family: 'Beauty Dream';
-  padding: 0 0.3em;
 }
 
 h1 {

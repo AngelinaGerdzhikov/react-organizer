@@ -15,14 +15,12 @@
 }
 
 .calendar-nav__arrow {
-    margin: 0 1em;
     cursor: pointer;
-    padding-top: 0.3em;
+    padding: 0;
 }
 
 .calendar-nav__arrow svg {
-  width: 1.5em;
-  height: 1.5em;
+  width: 0.5em;
 }
 .calendar-nav__arrow:hover svg{
   stroke: #000;

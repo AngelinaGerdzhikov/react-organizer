@@ -1,12 +1,12 @@
-import { getYearFromStorage } from "../../utility/local-storage-manager";
 import CalendarDay from "./calendar-day";
-import CalendarMonth from "./calendar-month";
+import NthWeekToNameMap from "./nth-week-to-name.map";
 
 class CalendarWeek {
   readonly firstDayOfWeek: CalendarDay;
   readonly firstDayOfWeekNumber: number = 0;
   readonly firstDayOfWeekFullName: string = "Monday";
   readonly dateRange: string = "";
+  readonly nthWeekOfMonthFullName: string = '';
 
   constructor(
     public readonly month: number,
@@ -26,6 +26,7 @@ class CalendarWeek {
     this.month = this.firstDayOfWeek.month;
     this.year = this.firstDayOfWeek.year;
     this.dateRange = this.getDateRange();
+    this.nthWeekOfMonthFullName = NthWeekToNameMap.get(this.nthWeekOfMonth.toString());
   }
 
   private getDateRange() {

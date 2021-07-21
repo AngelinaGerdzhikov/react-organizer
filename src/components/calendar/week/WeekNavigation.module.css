@@ -1,0 +1,25 @@
+.week-nav__title {
+  margin: 0 0.5em;
+}
+.week-nav__dates-holder {
+  position: relative;
+  margin: 0 0 0 0.3em;
+}
+
+.week-nav__date-range {
+  position: absolute;
+  font-size: 0.6em;
+  top: -0.2em;
+  width: 100%;
+  text-align: center;
+}
+
+.week-nav__month-range {
+  position: relative;
+  bottom: -0.2em;
+  font-size: 0.8em;
+}
+
+.hiphen {
+  font-size: 0.6em;
+}
