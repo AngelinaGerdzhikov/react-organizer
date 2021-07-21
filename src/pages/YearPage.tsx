@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import YearDetails from '../components/calendar/year/YearDetails';
 import YearNavigation from '../components/calendar/year/YearNavigation';
 import { getYearFromStorage } from '../utility/local-storage-manager';
+import classes from './Page.module.css';
 
 interface RouteParams {
   year: string;
@@ -15,10 +16,10 @@ const YearPage = () => {
   const year = getYearFromStorage(+yearParam);
   
   return (
-    <Fragment>
+    <main className={classes.page}>
       <YearNavigation year={year}></YearNavigation>
       <YearDetails months={year.calendarMonths} year={year}/>
-    </Fragment>
+    </main>
   );
 }
 

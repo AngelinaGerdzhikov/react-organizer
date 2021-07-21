@@ -5,6 +5,7 @@ import MonthNavigation from "../components/calendar/month/MonthNavigation";
 import MonthSidebar from "../components/calendar/month/MonthSidebar";
 import CalendarMonth from "../models/calendar/calendar-month";
 import { getYearFromStorage } from "../utility/local-storage-manager";
+import classes from './Page.module.css';
 
 interface RouteParams {
   year: string;
@@ -19,11 +20,11 @@ const MonthPage = () => {
   let month: CalendarMonth = year?.calendarMonths[+monthParam];
   
   return (
-    <Fragment>
+    <main className={classes.page}>
       <MonthNavigation month={month} />
       <MonthSidebar weeks={month.monthDatesInWeeks} />
       <MonthDetails month={month} />
-    </Fragment>
+    </main>
   );
 };
 

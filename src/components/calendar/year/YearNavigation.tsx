@@ -1,18 +1,24 @@
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import CalendarYear from "../../../models/calendar/calendar-year";
+import CalendarNavigation from "../../UI/CalendarNavigation";
 
+const YearNavigation: React.FC<{ year: CalendarYear }> = (props) => {
+  const history = useHistory();
 
-const YearNavigation:React.FC<{ year: CalendarYear}> = (props) => {
+  const getPreviousYearHandler = () => {
+    history.push(`/year/${+props.year.yearNumber - 1}`);
+  };
+
+  const getNextYearHandler = () => {
+    history.push(`/year/${+props.year.yearNumber + 1}`);
+  };
+
   return (
-    <nav>
-      <Link to={`/year/${+props.year.yearNumber - 1}`} className="btn">
-        {"<"}
-      </Link>
-      <h1>{props.year.yearNumber}</h1>
-      <Link to={`/year/${+props.year.yearNumber + 1}`} className="btn">
-        {">"}
-      </Link>
-    </nav>
+    <CalendarNavigation
+      title={props.year.yearNumber.toString()}
+      onPreviousClick={getPreviousYearHandler}
+      onNextClick={getNextYearHandler}
+    />
   );
 };
 

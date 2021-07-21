@@ -7,7 +7,7 @@ class CalendarYear {
 
   constructor(public yearNumber: number) {
     this.isYearALeapYear = CalendarCreator.getIsYearALeapYear(yearNumber);
-    this.calendarMonths = CalendarCreator.getYearInMonths(yearNumber);
+    this.calendarMonths = CalendarCreator.createYear(yearNumber);
   }
 }
 

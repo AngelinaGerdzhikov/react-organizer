@@ -1,0 +1,6 @@
+.page {
+  /* background: url('../assets/images/floral-bg.jpg') no-repeat;
+  background-size: cover; */
+  height: 100vh;
+  overflow: auto
+}

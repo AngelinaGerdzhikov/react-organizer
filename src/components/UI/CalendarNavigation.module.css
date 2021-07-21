@@ -1,0 +1,29 @@
+.calendar-nav {
+  max-height: 10vh;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-nav__title {
+    margin: 0;
+}
+    
+.calendar-nav__title .cursive {
+  position: relative;
+}
+
+.calendar-nav__arrow {
+    margin: 0 1em;
+    cursor: pointer;
+    padding-top: 0.3em;
+}
+
+.calendar-nav__arrow svg {
+  width: 1.5em;
+  height: 1.5em;
+}
+.calendar-nav__arrow:hover svg{
+  stroke: #000;
+}

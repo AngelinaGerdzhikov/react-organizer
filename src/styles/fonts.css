@@ -1,0 +1,44 @@
+@font-face {
+  font-family: Pretty;
+  src: url('../assets/fonts/Pretty\ script.woff');
+}
+
+@font-face {
+  font-family: 'Beauty Dream';
+  src: url('../assets/fonts/Beauty-Dream.ttf.woff');
+}
+
+@font-face {
+  font-family: 'Delicious Adventures';
+  src: url('../assets/fonts/Delicious\ Adventures.woff');
+}
+
+@font-face {
+  font-family: 'Fashionism Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Fashionism Regular'), url('../assets/fonts/fashr954.woff') format('woff');
+  }
+  
+
+  @font-face {
+  font-family: 'Fashionism Italic';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Fashionism Italic'), url('../assets/fonts/fashi954.woff') format('woff');
+  }
+  
+
+  @font-face {
+  font-family: 'Fashionism Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Fashionism Light'), url('../assets/fonts/fashl954.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Happy Camper';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Happy Camper Regular'), url('../assets/fonts/Happy-Camper-Regular.woff') format('woff');
+  }
