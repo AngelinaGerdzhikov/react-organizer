@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 import MonthDetails from "../components/calendar/month/MonthDetails";
 import MonthNavigation from "../components/calendar/month/MonthNavigation";

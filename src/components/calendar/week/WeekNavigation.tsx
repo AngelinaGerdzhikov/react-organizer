@@ -41,34 +41,9 @@ const WeekNavigation: React.FC<{ month: CalendarMonth; weekIndex: number }> = (
     }
   };
 
-  // const getDateRangeJSX = () => {
-  //   const isWeekInSameMonth = week.days[0].month === week.days[6].month;
-
-  //   if (!isWeekInSameMonth) {
-  //     return (
-  //       <h1>
-  //         {week.days[0].dayOfMonth}
-  //         <span className="cursive">{week.days[0].monthName}</span>
-  //         -&nbsp;
-  //         {week.days[6].dayOfMonth}
-  //         <span className="cursive">{week.days[6].monthName}</span>
-  //       </h1>
-  //     );
-  //   } else {
-  //     return (
-  //       <h1>
-  //         {week.days[0].dayOfMonth} - {week.days[6].dayOfMonth}
-  //         <span className="cursive"> {week.days[6].monthName}</span>
-  //       </h1>
-  //     );
-  //   }
-  // };
-
-
   const getDateRangeJSX = () => {
     const isWeekInSameMonth = week.days[0].month === week.days[6].month;
     const dateRange = `${week.days[0].dayOfMonth} - ${week.days[6].dayOfMonth}`;
-    const monthRange = isWeekInSameMonth ? week.days[0].monthName : `${week.days[0].monthName} - ${week.days[6].monthName}`;
 
     return (
       <h1 className={classes['week-nav__title']}>
