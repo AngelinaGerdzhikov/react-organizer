@@ -1,4 +1,4 @@
-import Button from "../UI/Button";
+import Button from "./Button";
 import classes from "./CalendarNavigation.module.css";
 import { ReactComponent as LeftArrowSvg } from '../../assets/icons/arrow-left.svg';
 import { ReactComponent as RightArrowSvg } from '../../assets/icons/arrow-right.svg';

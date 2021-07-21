@@ -1,0 +1,16 @@
+
+.task-status {
+  display: inline-block;
+  margin-right: 0.6em;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.task-status:hover rect,
+.task-status--current rect{
+  fill: rgba(0,0,0,0.1);
+}
+
+.task-status svg {
+  width: 0.8em;
+  stroke-width: 2px;
+}
