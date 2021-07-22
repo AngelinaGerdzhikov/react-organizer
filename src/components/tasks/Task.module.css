@@ -1,0 +1,27 @@
+.task {
+  position: relative;
+}
+
+.task--inactive {
+  opacity: 0.4;
+}
+
+.task__title {
+  display: inline-block;
+  margin: 0;
+  font-weight: 100;
+}
+
+.task__delete-btn {
+  position: absolute;
+  right: 0;
+  font-size: 0.6em;
+  top: 0.2em;
+  opacity: 0.2;
+}
+
+.task__delete-btn:hover {
+  opacity: 1;
+  font-weight: 600;
+  cursor: pointer;
+}
