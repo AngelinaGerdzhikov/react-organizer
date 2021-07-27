@@ -10,6 +10,40 @@
   display: inline-block;
   margin: 0;
   font-weight: 100;
+  width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: text-bottom;
+}
+
+.task__title:hover {
+  cursor: context-menu;
+}
+
+.task__title-input,
+.task__title-input:active,
+.task__title-input:focus,
+.task__title-input:focus-visible,
+.task__title-input:visited {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 80%;
+  font-weight: 100;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.task__title-input:hover {
+  cursor: auto;
+}
+
+.task__title-input:active,
+.task__title-input:focus,
+.task__title-input:focus-visible,
+.task__title-input:visited {
+  border-bottom: 1px dotted #000;
 }
 
 .task__delete-btn {

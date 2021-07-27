@@ -7,7 +7,7 @@ const DayList: React.FC<{ week: CalendarWeek }> = (props) => {
     <section>
       <ul className={classes.weekdays}>
         {props.week.days.map((day, dayIndex) => {
-          return day && <DayListItem day={day} />          
+          return day && <DayListItem day={day} key={dayIndex}/>          
         })}
       </ul>
     </section>

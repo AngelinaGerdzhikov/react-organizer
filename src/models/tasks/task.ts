@@ -1,8 +1,9 @@
-import { TaskStatus } from './task-status.enum';
+import { TaskStatus } from "./task-status.enum";
 
 export class Task {
-  constructor(public title: string, public status: TaskStatus = TaskStatus.TO_DO) {
-    this.title = title;
-    this.status = status || TaskStatus.TO_DO;
-  }
+  constructor(
+    public readonly id: string,
+    public title: string,
+    public status: TaskStatus = TaskStatus.TO_DO
+  ) { }
 }
