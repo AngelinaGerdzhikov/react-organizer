@@ -6,11 +6,7 @@ const taskSlice = createSlice({
   initialState: INITIAL_TASK_STATE,
   reducers: { 
     addTask(state, action) {
-      const newTask = {
-        id: action.payload.id,
-        title: action.payload.title,
-        status: action.payload.status
-      };
+      const newTask = { ...action.payload };
       const updatedTasks = [ ...state.tasks];
       updatedTasks.push(newTask);
       return { ...state, tasks: updatedTasks };
@@ -25,6 +21,18 @@ const taskSlice = createSlice({
       if (taskIndex >= 0) {
         const task = state.tasks[taskIndex];
         const updatedTask = { ...task, title: action.payload.title };
+        const updatedTasks = [ ...state.tasks];
+        updatedTasks[taskIndex] = updatedTask;
+        return { ...state, tasks: updatedTasks };
+      }
+      return { ...state };
+    },
+    updateTaskStatus(state, action) {
+      const taskIndex = state.tasks.findIndex(task => task.id === action.payload.id);
+  
+      if (taskIndex >= 0) {
+        const task = state.tasks[taskIndex];
+        const updatedTask = { ...task, status: action.payload.newStatus };
         const updatedTasks = [ ...state.tasks];
         updatedTasks[taskIndex] = updatedTask;
         return { ...state, tasks: updatedTasks };

@@ -1,18 +1,16 @@
 import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
 import { Task as TaskModel } from "../../models/tasks/task";
-import { TaskStatus } from "../../models/tasks/task-status.enum";
 import { taskActions } from "../../store/task-slice";
-import Button from '../UI/Button';
-import classes from './TaskList.module.css';
+import AddTask from './AddTask';
 import Task from './Task';
+import classes from './TaskList.module.css';
 
 const TaskList = () => {
   const tasks = useAppSelector(state => state.tasks.tasks);
   const dispatch = useAppDispatch();
 
   const addTaskHandler = () => {
-    const now = new Date();
-    const task = new TaskModel(now.toUTCString(), 'Add Task Reducer', TaskStatus.TO_DO);
+    const task = new TaskModel('Add Task Reducer');
     dispatch(taskActions.addTask({ 
       id: task.id,
       title: task.title,
@@ -27,7 +25,7 @@ const TaskList = () => {
           <Task task={task} />
         </li>
       ))}
-      <Button className={classes['add-task']} onClick={addTaskHandler}>+</Button>
+      <AddTask addTaskHandler={addTaskHandler}/>
     </ul>
   );
 };

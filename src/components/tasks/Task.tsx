@@ -5,12 +5,22 @@ import Button from "../UI/Button";
 import { useDispatch } from "react-redux";
 import taskSlice from "../../store/task-slice";
 import { useState, useRef } from "react";
+import { useAppDispatch } from "../../hooks/store-hooks";
 
 const Task: React.FC<{ task: TaskModel }> = (props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [titleInputValue, setTitleInputValue] = useState(props.task.title);
   const inputTitleRef = useRef<HTMLInputElement>(null);
   const [isEditTitleActive, setIsEditTitleActive] = useState(false);
+  const [isTitleVisible, setIsTitleVisible] = useState(true);
+
+  const toggleChangeStatusHandler = () => {
+    setIsTitleVisible(visibility => (visibility = !visibility));
+  }
+
+  const changeStatusHandler = (status: string) => {
+    dispatch(taskSlice.actions.updateTaskStatus({ id: props.task.id, newStatus: status}))
+  }
 
   const clickTitleHandler = () => {
     setIsEditTitleActive(true);
@@ -38,12 +48,12 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
     }
   };
 
-  const inputBlurHandler = () => {
+  const inputBlurHandler = (event: React.FormEvent<HTMLInputElement>) => {
     setIsEditTitleActive(false);
     dispatch(
       taskSlice.actions.updateTaskTitle({
         id: props.task.id,
-        title: inputTitleRef.current?.value,
+        title: event.currentTarget.value,
       })
     );
   };
@@ -54,8 +64,12 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
 
   return (
     <section className={classes.task}>
-      <TaskStatus status={props.task.status} />
-      {!isEditTitleActive && (
+      <TaskStatus 
+        status={props.task.status}
+        onToggleChangeStatus={toggleChangeStatusHandler}
+        onChangeStatus={changeStatusHandler}
+        />
+      {!isEditTitleActive && isTitleVisible &&(
         <h4 className={classes["task__title"]} onClick={clickTitleHandler}>
           {props.task.title}
         </h4>
