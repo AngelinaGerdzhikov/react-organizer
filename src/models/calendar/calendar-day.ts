@@ -12,12 +12,12 @@ class CalendarDay {
   readonly isWeekend: boolean = false;
 
   constructor(public readonly date: Date) {
-    this.dayOfWeek = this.date.getDay();
+    this.dayOfWeek = this.date.getUTCDay();
     this.dayOfWeekFullName = WeekdayToNameMap.get(this.dayOfWeek.toString());
-    this.dayOfMonth = this.date.getDate();
-    this.month = this.date.getMonth();
+    this.dayOfMonth = this.date.getUTCDate();
+    this.month = this.date.getUTCMonth();
     this.monthName = MonthToNameMap.get(this.month.toString());
-    this.year = this.date.getFullYear();
+    this.year = this.date.getUTCFullYear();
     this.isWeekday = this.dayOfWeek !== 0 && this.dayOfWeek !== 6;
     this.isWeekend = this.dayOfWeek === 0 || this.dayOfWeek === 6;
   }

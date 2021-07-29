@@ -5,14 +5,14 @@ import AddTask from './AddTask';
 import Task from './Task';
 import classes from './TaskList.module.css';
 
-const TaskList = () => {
-  const tasks = useAppSelector(state => state.tasks.tasks);
+const TaskList:React.FC<{ tasks: TaskModel[], year: number, month: number, dayOfMonth: number}> = (props) => {
   const dispatch = useAppDispatch();
 
-  const addTaskHandler = () => {
-    const task = new TaskModel('Add Task Reducer');
+  const addTaskHandler = (title: string) => {
+    const task = new TaskModel(title, new Date(props.year, props.month, props.dayOfMonth).toDateString());
     dispatch(taskActions.addTask({ 
       id: task.id,
+      date: task.date,
       title: task.title,
       status: task.status
     }));
@@ -20,7 +20,7 @@ const TaskList = () => {
 
   return (
     <ul className={classes['task-list']}>
-      {tasks.map((task) => (
+      {props.tasks.map((task) => (
         <li key={task.id}>
           <Task task={task} />
         </li>
