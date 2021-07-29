@@ -6,14 +6,26 @@ import DayListItem from "./DayListItem";
 const DayList: React.FC<{ week: CalendarWeek }> = (props) => {
   const weeklyTasks = useAppSelector(state => state.tasks.tasks.filter(task => {
     const taskDate = new Date(task.date);
+    const taskMonth = taskDate.getMonth();
     const { firstDayOfWeek } = props.week;
     const lastDayOfWeek = props.week.days[6];
+
+    const taskIsInYear = taskDate?.getFullYear() === firstDayOfWeek.year;
+    const weekIsInSameMonth = firstDayOfWeek.month === lastDayOfWeek.month;
+    const taskIsInFirstDayOfWeekMonth = taskIsInYear && taskMonth === firstDayOfWeek.month;
+    const taskIsInSecondDayOfWeekMonth = taskIsInYear && taskMonth === lastDayOfWeek.month;
   
-    if (
-      (taskDate?.getFullYear() === firstDayOfWeek.year) && 
-      (taskDate?.getMonth() === firstDayOfWeek.month || taskDate.getMonth() === lastDayOfWeek.month) &&
-      (taskDate?.getDate() >= firstDayOfWeek.dayOfMonth && taskDate.getDate() <= lastDayOfWeek.dayOfMonth)
-    ) { return task; }
+    if (weekIsInSameMonth && taskIsInFirstDayOfWeekMonth && taskDate.getDate() >= firstDayOfWeek.dayOfMonth && taskDate.getDate() <= lastDayOfWeek.dayOfMonth) {
+      return task;
+    }
+
+    if (!weekIsInSameMonth && taskIsInFirstDayOfWeekMonth && taskDate.getDate() >= firstDayOfWeek.dayOfMonth) {
+      return task;
+    }
+
+    if (!weekIsInSameMonth && taskIsInSecondDayOfWeekMonth) {
+      return task;
+    }
 
     return null;
   }));
