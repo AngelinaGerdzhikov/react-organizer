@@ -21,6 +21,12 @@ const TaskStatus: React.FC<{
     props.onToggleChangeStatus();
   };
 
+  const changeStatusHandler = (status: string) => {
+    setIsChangeStatusOpen((status) => (status = !status));
+    props.onChangeStatus(status);
+    props.onToggleChangeStatus();
+  }
+
   const statusSvgJSX = (status: string) => {
     return (
       <React.Fragment>
@@ -61,7 +67,7 @@ const TaskStatus: React.FC<{
                   }
                   ${taskStatus === status && classes["task-status--current"]}
                 `}
-                onClick={() => props.onChangeStatus(taskStatus)}
+                onClick={() => changeStatusHandler(taskStatus)}
               >
                 {statusSvgJSX(taskStatus)}
               </div>
