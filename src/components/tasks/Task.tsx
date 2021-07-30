@@ -5,6 +5,7 @@ import taskSlice from "../../store/task-slice";
 import Button from "../UI/Button";
 import classes from "./Task.module.css";
 import TaskStatus from "./TaskStatus";
+import DeleteTaskPrompt from "./DeleteTaskPrompt";
 
 const Task: React.FC<{ task: TaskModel }> = (props) => {
   const dispatch = useAppDispatch();
@@ -12,18 +13,25 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   const inputTitleRef = useRef<HTMLInputElement>(null);
   const [isEditTitleActive, setIsEditTitleActive] = useState(false);
   const [isTitleVisible, setIsTitleVisible] = useState(true);
+  const [isDeleteTaskModalVisible, setIsDeleteTaskModalVisible] =
+    useState(false);
 
   const toggleChangeStatusHandler = (isOpen?: boolean) => {
-    if ( isOpen === undefined ) {
-      setIsTitleVisible(visibility => (visibility = !visibility));
+    if (isOpen === undefined) {
+      setIsTitleVisible((visibility) => (visibility = !visibility));
     } else {
       setIsTitleVisible(!isOpen);
     }
-  }
+  };
 
   const changeStatusHandler = (status: string) => {
-    dispatch(taskSlice.actions.updateTaskStatus({ id: props.task.id, newStatus: status}))
-  }
+    dispatch(
+      taskSlice.actions.updateTaskStatus({
+        id: props.task.id,
+        newStatus: status,
+      })
+    );
+  };
 
   const clickTitleHandler = () => {
     setIsEditTitleActive(true);
@@ -61,18 +69,26 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
     );
   };
 
+  const showDeleteTaskModalHandler = () => {
+    setIsDeleteTaskModalVisible(true);
+  };
+
+  const hideDeleteTaskModalHandler = () => {
+    setIsDeleteTaskModalVisible(false);
+  };
+
   const deleteHandler = () => {
     dispatch(taskSlice.actions.removeTask({ id: props.task.id }));
   };
 
   return (
     <section className={classes.task}>
-      <TaskStatus 
+      <TaskStatus
         status={props.task.status}
         onToggleChangeStatus={toggleChangeStatusHandler}
         onChangeStatus={changeStatusHandler}
-        />
-      {!isEditTitleActive && isTitleVisible &&(
+      />
+      {!isEditTitleActive && isTitleVisible && (
         <h4 className={classes["task__title"]} onClick={clickTitleHandler}>
           {props.task.title}
         </h4>
@@ -89,9 +105,19 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
           onBlur={inputBlurHandler}
         />
       )}
-      <Button className={classes["task__delete-btn"]} onClick={deleteHandler}>
+      <Button
+        className={classes["task__delete-btn"]}
+        onClick={showDeleteTaskModalHandler}
+      >
         X
       </Button>
+      {isDeleteTaskModalVisible && (
+        <DeleteTaskPrompt
+          taskTitle={props.task.title}
+          onHidePrompt={hideDeleteTaskModalHandler}
+          onDeleteTask={deleteHandler}
+        />
+      )}
     </section>
   );
 };
