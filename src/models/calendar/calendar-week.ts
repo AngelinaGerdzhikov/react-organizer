@@ -17,7 +17,7 @@ class CalendarWeek {
     if (nthWeekOfMonth === 0) {
       this.firstDayOfWeek =
         this.days.find((day) => day.date.getDate() === 1) ||
-        new CalendarDay(new Date(this.year, this.month));
+        new CalendarDay(new Date(Date.UTC(this.year, this.month)));
     } else {
       this.firstDayOfWeek = this.days[0];
     }

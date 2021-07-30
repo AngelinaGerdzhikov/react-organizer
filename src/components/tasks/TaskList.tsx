@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "../../hooks/store-hooks";
+import { useAppDispatch } from "../../hooks/store-hooks";
 import { Task as TaskModel } from "../../models/tasks/task";
 import { taskActions } from "../../store/task-slice";
 import AddTask from './AddTask';
@@ -9,13 +9,9 @@ const TaskList:React.FC<{ tasks: TaskModel[], year: number, month: number, dayOf
   const dispatch = useAppDispatch();
 
   const addTaskHandler = (title: string) => {
-    const task = new TaskModel(title, new Date(props.year, props.month, props.dayOfMonth).toDateString());
-    dispatch(taskActions.addTask({ 
-      id: task.id,
-      date: task.date,
-      title: task.title,
-      status: task.status
-    }));
+    const taskDate = new Date(Date.UTC(props.year, props.month, props.dayOfMonth)).toUTCString();
+    const task = new TaskModel(title, taskDate);
+    dispatch(taskActions.addTask({ ...task}));
   }
 
   return (

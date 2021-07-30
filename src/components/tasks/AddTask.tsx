@@ -1,12 +1,10 @@
 import React, { useRef, useState } from "react";
-import { useAppDispatch } from "../../hooks/store-hooks";
-import { Task } from "../../models/tasks/task";
-import taskSlice from "../../store/task-slice";
 import Button from "../UI/Button";
 import classes from "./AddTask.module.css";
 
-const AddTask: React.FC<{ addTaskHandler: (title: string) => void }> = (props) => {
-  // const dispatch = useAppDispatch();
+const AddTask: React.FC<{ addTaskHandler: (title: string) => void }> = (
+  props
+) => {
   const [titleInputValue, setTitleInputValue] = useState("");
   const [isInputActive, setIsInputActive] = useState(false);
   const inputTitleRef = useRef<HTMLInputElement>(null);
@@ -14,9 +12,11 @@ const AddTask: React.FC<{ addTaskHandler: (title: string) => void }> = (props) =
   const addButtonClickHandler = () => {
     inputTitleRef.current?.focus();
     setIsInputActive(true);
-  }
+  };
 
-  const titleInputChangeHandler = (event: React.FormEvent<HTMLInputElement>) => {
+  const titleInputChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
     setTitleInputValue(event.currentTarget.value);
   };
 
@@ -24,31 +24,34 @@ const AddTask: React.FC<{ addTaskHandler: (title: string) => void }> = (props) =
     if (event.key === "Enter") {
       if (event.currentTarget.value.length > 0) {
         setTitleInputValue(event.currentTarget.value);
-        props.addTaskHandler(event.currentTarget.value)
-        // const newTask = new Task(event.currentTarget.value, new Date());
-        // dispatch(taskSlice.actions.addTask({ ...newTask }));
-        setTitleInputValue('');
-        setIsInputActive(false);
+        props.addTaskHandler(event.currentTarget.value);
+        resetTitleInput();
       }
     }
   };
 
   const inputBlurHandler = (event: React.FormEvent<HTMLInputElement>) => {
-    if (event.currentTarget.value.length > 0) { 
+    if (event.currentTarget.value.length > 0) {
       props.addTaskHandler(event.currentTarget.value);
-      // const newTask = new Task(event.currentTarget.value, new Date());
-      // dispatch(taskSlice.actions.addTask({ ...newTask }));
-      setTitleInputValue('');
-    } 
-    setIsInputActive(false);
+    }
+
+    resetTitleInput();
   };
 
+  const resetTitleInput = () => {
+    setTitleInputValue("");
+    setIsInputActive(false);
+  }
+
   return (
-    <section className={classes['add-task']}>
-      <Button className={`
+    <section className={classes["add-task"]}>
+      <Button
+        className={`
           ${classes["add-task__button"]}
-          ${isInputActive && classes['add-task__button--active']}
-        `} onClick={addButtonClickHandler}>
+          ${isInputActive && classes["add-task__button--active"]}
+        `}
+        onClick={addButtonClickHandler}
+      >
         +
       </Button>
       <input

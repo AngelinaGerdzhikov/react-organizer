@@ -25,9 +25,15 @@ export const INITIAL_TASK_STATE: TaskState = {
       status: TaskStatus.COMPLETED
     },
     {
-      id: 'task_2',
+      id: 'task_3',
       title: "Get Tasks By Date",
       date: new Date(2021, 6, 28).toUTCString(),
+      status: TaskStatus.COMPLETED
+    },
+    {
+      id: 'task_4',
+      title: "Fix Tasks",
+      date: new Date(2021, 6, 31).toUTCString(),
       status: TaskStatus.COMPLETED
     }
   ]

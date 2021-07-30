@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from "react";
+import React, { useState } from "react";
 import { ReactComponent as CancelledSvg } from "../../assets/icons/CANCELLED.svg";
 import { ReactComponent as CompletedSvg } from "../../assets/icons/COMPLETED.svg";
 import { ReactComponent as InProgressSvg } from "../../assets/icons/IN_PROGRESS.svg";

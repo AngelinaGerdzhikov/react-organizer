@@ -1,11 +1,10 @@
-import TaskStatus from "./TaskStatus";
-import classes from "./Task.module.css";
-import { Task as TaskModel } from "../../models/tasks/task";
-import Button from "../UI/Button";
-import { useDispatch } from "react-redux";
-import taskSlice from "../../store/task-slice";
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import { useAppDispatch } from "../../hooks/store-hooks";
+import { Task as TaskModel } from "../../models/tasks/task";
+import taskSlice from "../../store/task-slice";
+import Button from "../UI/Button";
+import classes from "./Task.module.css";
+import TaskStatus from "./TaskStatus";
 
 const Task: React.FC<{ task: TaskModel }> = (props) => {
   const dispatch = useAppDispatch();
