@@ -13,8 +13,12 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   const [isEditTitleActive, setIsEditTitleActive] = useState(false);
   const [isTitleVisible, setIsTitleVisible] = useState(true);
 
-  const toggleChangeStatusHandler = () => {
-    setIsTitleVisible(visibility => (visibility = !visibility));
+  const toggleChangeStatusHandler = (isOpen?: boolean) => {
+    if ( isOpen === undefined ) {
+      setIsTitleVisible(visibility => (visibility = !visibility));
+    } else {
+      setIsTitleVisible(!isOpen);
+    }
   }
 
   const changeStatusHandler = (status: string) => {

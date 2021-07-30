@@ -1,3 +1,6 @@
+.outside-wrapper {
+  display: inline-block;
+}
 .task-status {
   display: inline-block;
   margin-right: 0.6em;

@@ -6,10 +6,11 @@ import { ReactComponent as MigratedSvg } from "../../assets/icons/MIGRATED.svg";
 import { ReactComponent as ToDoSvg } from "../../assets/icons/TO_DO.svg";
 import { TaskStatus as TaskStatusEnum } from "../../models/tasks/task-status.enum";
 import classes from "./TaskStatus.module.css";
+import OutsideClickHandler from "../UI/OutsideClickHandler";
 
 const TaskStatus: React.FC<{
   status: TaskStatusEnum;
-  onToggleChangeStatus: () => void;
+  onToggleChangeStatus: (isOpen?: boolean) => void;
   onChangeStatus: (status: string) => void;
 }> = (props) => {
   const [isChangeStatusOpen, setIsChangeStatusOpen] = useState(false);
@@ -20,6 +21,11 @@ const TaskStatus: React.FC<{
     setIsChangeStatusOpen((status) => (status = !status));
     props.onToggleChangeStatus();
   };
+
+  const outsideClickHandler = () => {
+    setIsChangeStatusOpen(false);
+    props.onToggleChangeStatus(false);
+  }
 
   const changeStatusHandler = (status: string) => {
     setIsChangeStatusOpen((status) => (status = !status));
@@ -40,7 +46,7 @@ const TaskStatus: React.FC<{
   };
 
   return (
-    <React.Fragment>
+    <OutsideClickHandler className={classes['outside-wrapper']} onOutsideClick={outsideClickHandler}>
       <div
         className={`
           ${classes["task-status"]}
@@ -75,7 +81,7 @@ const TaskStatus: React.FC<{
           })}
         </div>
       )}
-    </React.Fragment>
+    </OutsideClickHandler>
   );
 };
 
