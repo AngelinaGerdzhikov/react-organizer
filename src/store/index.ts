@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import taskSlice from './task-slice';
+import undoable from 'redux-undo';
 
 const store = configureStore({
   reducer: {
-    tasks: taskSlice.reducer
+    tasks: undoable(taskSlice.reducer)
   }
 });
 

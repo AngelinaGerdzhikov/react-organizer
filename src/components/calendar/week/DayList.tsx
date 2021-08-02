@@ -5,7 +5,7 @@ import DayListItem from "./DayListItem";
 
 const DayList: React.FC<{ week: CalendarWeek }> = (props) => {
   const weeklyTasks = useAppSelector((state) =>
-    state.tasks.tasks.filter((task) => {
+    state.tasks.present.tasks.filter((task) => {
       const taskDate = new Date(task.date);
       const taskMonth = taskDate.getMonth();
       const { firstDayOfWeek } = props.week;
