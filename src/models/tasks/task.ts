@@ -1,7 +1,7 @@
 import { TaskStatus } from "./task-status.enum";
-import ITask from "./task.interface";
+import ICalendarItem from "./calendar-item.interface";
 
-export class Task implements ITask {
+export class Task implements ICalendarItem {
   dateKey: string;
 
   constructor(

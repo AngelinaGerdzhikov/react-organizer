@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import ITask from '../models/tasks/task.interface';
+import ICalendarItem from '../models/tasks/calendar-item.interface';
 import { INITIAL_TASK_STATE } from './task-state';
 
 const taskSlice = createSlice({
@@ -7,7 +7,7 @@ const taskSlice = createSlice({
   initialState: INITIAL_TASK_STATE,
   reducers: { 
     addTask(state, action) {
-      const newTask: ITask = { ...action.payload };
+      const newTask: ICalendarItem = { ...action.payload };
       state.tasks.push(newTask);
 
       if (state.taskIdsPerDate[newTask.dateKey]) {

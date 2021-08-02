@@ -1,8 +1,8 @@
 import { TaskStatus } from "../models/tasks/task-status.enum";
-import ITask from "../models/tasks/task.interface";
+import ICalendarItem from "../models/tasks/calendar-item.interface";
 
 export interface TaskState {
-  tasks: ITask[],
+  tasks: ICalendarItem[],
   taskHasBeenDeleted: boolean,
   taskIdsPerDate: {
     [yearMonthDay: string]: string[]

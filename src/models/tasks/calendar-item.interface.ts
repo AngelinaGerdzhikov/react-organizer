@@ -1,6 +1,6 @@
 import { TaskStatus } from "./task-status.enum";
 
-interface ITask {
+interface ICalendarItem {
   title: string,
   date: string,
   dateKey: string
@@ -8,4 +8,4 @@ interface ITask {
   readonly id: string
 }
 
-export default ITask;
+export default ICalendarItem;

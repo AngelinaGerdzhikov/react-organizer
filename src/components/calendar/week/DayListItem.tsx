@@ -1,13 +1,12 @@
 import { useAppSelector } from "../../../hooks/store-hooks";
 import CalendarDay from "../../../models/calendar/calendar-day";
-import { Task } from "../../../models/tasks/task";
 import TaskList from "../../tasks/TaskList";
 import classes from "./DayListItem.module.css";
 
-const DayListItem: React.FC<{ day: CalendarDay; tasks: Task[] }> = (props) => {
+const DayListItem: React.FC<{ day: CalendarDay }> = (props) => {
   const { year, month, dayOfMonth, dayOfWeekFullName } = props.day;
-  const dayKey = `${year}${month}${dayOfMonth}`;
   const dayTasks = useAppSelector(state => {
+    const dayKey = `${year}${month}${dayOfMonth}`;
     const taskKeys = state.tasks.present.taskIdsPerDate[dayKey];
     return taskKeys && taskKeys.length > 0 && state.tasks.present.tasks.filter(task => taskKeys.includes(task.id) );    
   });
