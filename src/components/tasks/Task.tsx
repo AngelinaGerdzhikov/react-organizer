@@ -78,7 +78,7 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   };
 
   const deleteHandler = () => {
-    dispatch(taskSlice.actions.removeTask({ id: props.task.id }));
+    dispatch(taskSlice.actions.removeTask({ id: props.task.id, dateKey: props.task.dateKey }));
   };
 
   return (
