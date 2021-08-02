@@ -1,23 +1,23 @@
-@import './styles/fonts.css';
+@import "./styles/fonts.css";
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Fashionism Regular', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Fashionism Regular", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Fonts */
-h1, h2, h3 {
-  font-family: 'Happy Camper';
+h1,
+h2,
+h3 {
+  font-family: "Happy Camper";
   font-weight: 100;
 }
 
 .cursive {
-  font-family: 'Beauty Dream';
-  padding: 0 0.3em;
+  font-family: "Beauty Dream";
 }
 
 h1 {
@@ -25,11 +25,15 @@ h1 {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
 #root {
-  background: url('./assets/images/floral-bg.jpg') no-repeat;
+  background: url("./assets/images/floral-bg.jpg") no-repeat;
   background-size: cover;
+}
+
+.bold {
+  font-size: 700;
 }

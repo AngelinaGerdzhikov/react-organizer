@@ -1,4 +1,38 @@
-.button {
+button,
+.button,
+.button-primary {
   border: none;
   background: transparent;
+}
+
+.button:hover {
+  cursor: pointer;
+  background: #000;
+  color: #fff;
+}
+
+.button {
+  min-width: 100px;
+  margin: 0.5em;
+  padding: 0.5em 1em;
+  box-shadow: 1px 2px 3px 1px #00000040;
+}
+
+.button-primary {
+  background: #23bcae;
+  color: #fff;
+}
+
+.button-delete {
+  position: absolute;
+  right: 0;
+  font-size: 0.6em;
+  top: 0.2em;
+  opacity: 0.2;
+}
+
+.button-delete:hover {
+  opacity: 1;
+  font-weight: 600;
+  cursor: pointer;
 }

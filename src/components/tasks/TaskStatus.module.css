@@ -1,0 +1,35 @@
+.outside-wrapper {
+  display: inline-block;
+}
+.task-status {
+  display: inline-block;
+  margin-right: 0.6em;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.task-status:hover rect,
+.task-status--current rect{
+  fill: rgba(0,0,0,0.1);
+}
+
+.task-status svg {
+  width: 0.8em;
+  stroke-width: 2px;
+}
+
+.task-status--migrated {
+  margin-right: 0.2em!important;
+}
+
+.task-status--migrated svg {
+ width: 1.2em;
+}
+
+.change-status {
+  position: absolute;
+  width: 7em;
+  top: 0;
+  left: calc(1.1em + 5px);
+  transition: all 0.2s ease-in-out;
+  z-index: 1;
+}

@@ -15,7 +15,7 @@ export class CalendarMonth {
   readonly monthFullName: string = "";
 
   constructor(public readonly month: number, year: number) {
-    this.firstDayOfMonth = new Date(year, month, 1);
+    this.firstDayOfMonth = new Date(Date.UTC(year, month, 1, 0o0, 0o0, 0o0));
     this.year = this.firstDayOfMonth.getFullYear();
     this.numberOfDaysInMonth = CalendarCreator.getNumberOfDaysInMonth(
       this.month,

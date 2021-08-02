@@ -4,6 +4,7 @@ import CalendarMonth from "../../../models/calendar/calendar-month";
 import CalendarWeek from "../../../models/calendar/calendar-week";
 import { getYearFromStorage } from "../../../utility/local-storage-manager";
 import CalendarNavigation from "../../UI/CalendarNavigation";
+import classes from './WeekNavigation.module.css';
 
 const WeekNavigation: React.FC<{ month: CalendarMonth; weekIndex: number }> = (
   props
@@ -42,25 +43,28 @@ const WeekNavigation: React.FC<{ month: CalendarMonth; weekIndex: number }> = (
 
   const getDateRangeJSX = () => {
     const isWeekInSameMonth = week.days[0].month === week.days[6].month;
+    const dateRange = `${week.days[0].dayOfMonth} - ${week.days[6].dayOfMonth}`;
 
-    if (!isWeekInSameMonth) {
-      return (
-        <h1>
-          {week.days[0].dayOfMonth}
-          <span className="cursive">{week.days[0].monthName}</span>
-          -&nbsp;
-          {week.days[6].dayOfMonth}
-          <span className="cursive">{week.days[6].monthName}</span>
-        </h1>
-      );
-    } else {
-      return (
-        <h1>
-          {week.days[0].dayOfMonth} - {week.days[6].dayOfMonth}
-          <span className="cursive"> {week.days[6].monthName}</span>
-        </h1>
-      );
-    }
+    return (
+      <h1 className={classes['week-nav__title']}>
+        {`Week ${week.nthWeekOfMonthFullName}`}
+        <span className={classes['week-nav__dates-holder']}>
+          <span className={classes['week-nav__date-range']}>
+            {dateRange}
+          </span>
+          <span className={`cursive ${classes['week-nav__month-range']}`}>
+            {isWeekInSameMonth && week.days[0].monthName}
+            {!isWeekInSameMonth &&
+              <React.Fragment>
+                {week.days[0].monthName}
+                <span className={classes.hiphen}>-</span>
+                {week.days[6].monthName}
+              </React.Fragment>
+            } 
+          </span>
+        </span>
+      </h1>
+    );
   };
 
   return (

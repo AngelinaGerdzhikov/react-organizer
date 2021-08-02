@@ -12,7 +12,7 @@ class CalendarCreator {
       const numberOfDaysInMonth = monthToDaysMap.get(prevMonthNumber.toString());
       
       for (let i = 0; i <= leadingDays; i++) {
-        const prevMonthDay = new Date(prevMonthYearNumber, prevMonthNumber, numberOfDaysInMonth - i);
+        const prevMonthDay = new Date(Date.UTC(prevMonthYearNumber, prevMonthNumber, numberOfDaysInMonth - i, 0o0, 0o0, 0o0));
         monthDatesInWeeks[0][leadingDays - (i + 1)] = new CalendarDay(prevMonthDay);
       }
     }
@@ -25,7 +25,7 @@ class CalendarCreator {
       const [nextMonthNumber, nextMonthYearNumber] = CalendarMonth.getNextMonthData(lastDayOfMonth.month, lastDayOfMonth.year);
       
       for (let i = 1; i <= 6 - followingDays; i++) {
-        const nextMonthDay = new Date(nextMonthYearNumber, nextMonthNumber, i);
+        const nextMonthDay = new Date(Date.UTC(nextMonthYearNumber, nextMonthNumber, i, 0o0, 0o0, 0o0));
         monthDatesInWeeks[monthDatesInWeeks.length - 1][followingDays + i] = new CalendarDay(nextMonthDay);
       }
     }

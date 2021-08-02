@@ -12,8 +12,8 @@
 
 .title {
   text-align: center;
-  margin: 0;
-  margin: 0 auto 0.8em;
+  margin: 0 auto 0.5em;
+  font-size: 1.5em;
 }
 
 .date {
@@ -27,4 +27,5 @@
   background: #000;
   text-align: center;
   color: #fff;
+  padding: 1px;
 }

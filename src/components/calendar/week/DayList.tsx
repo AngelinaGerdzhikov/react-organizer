@@ -1,29 +1,88 @@
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../../hooks/store-hooks";
 import CalendarWeek from "../../../models/calendar/calendar-week";
-import WeekdayToNameMap from "../../../models/calendar/weekday-to-name.map";
+import { taskActions } from "../../../store/task-slice";
+import UndoTask from "../../tasks/UndoTask";
 import classes from "./DayList.module.css";
 import DayListItem from "./DayListItem";
 
 const DayList: React.FC<{ week: CalendarWeek }> = (props) => {
-  // const weekdayNamesJSX = () => {
-  //   const weekNames: string[] = [];
-  //   WeekdayToNameMap.forEach((value) => weekNames.push(value));
-  //   return weekNames.map((weekdayName) => (
-  //     <li>
-  //       <h3>{weekdayName}</h3>
-  //     </li>
-  //   ));
-  // };
+  const dispatch = useAppDispatch();
+  const weeklyTasks = useAppSelector((state) =>
+    state.tasks.present.tasks.filter((task) => {
+      const taskDate = new Date(task.date);
+      const taskMonth = taskDate.getMonth();
+      const { firstDayOfWeek } = props.week;
+      const lastDayOfWeek = props.week.days[6];
+
+      const taskIsInYear = taskDate?.getFullYear() === firstDayOfWeek.year;
+      const weekIsInSameMonth = firstDayOfWeek.month === lastDayOfWeek.month;
+      const taskIsInFirstDayOfWeekMonth =
+        taskIsInYear && taskMonth === firstDayOfWeek.month;
+      const taskIsInSecondDayOfWeekMonth =
+        taskIsInYear && taskMonth === lastDayOfWeek.month;
+
+      if (
+        weekIsInSameMonth &&
+        taskIsInFirstDayOfWeekMonth &&
+        taskDate.getDate() >= firstDayOfWeek.dayOfMonth &&
+        taskDate.getDate() <= lastDayOfWeek.dayOfMonth
+      ) {
+        return task;
+      }
+
+      if (
+        !weekIsInSameMonth &&
+        taskIsInFirstDayOfWeekMonth &&
+        taskDate.getDate() >= firstDayOfWeek.dayOfMonth
+      ) {
+        return task;
+      }
+
+      if (!weekIsInSameMonth && taskIsInSecondDayOfWeekMonth) {
+        return task;
+      }
+
+      return null;
+    })
+  );
+
+  const taskHasBeenDeleted = useAppSelector(
+    (state) => state.tasks.present.taskHasBeenDeleted
+  );
+
+  useEffect(() => {
+    if (taskHasBeenDeleted) {
+      setTimeout(() => {
+        dispatch(taskActions.setTaskHasBeenDeleted(false));
+      }, 300000);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [taskHasBeenDeleted]);
+
+  const doNotUndoHandler = () => {
+    dispatch(taskActions.setTaskHasBeenDeleted(false));
+  };
+
+  const undoHandler = () => {
+    dispatch(taskActions.setTaskHasBeenDeleted(false));
+  };
 
   return (
     <section>
-      {/* <nav className={classes["days-of-week-names"]}>
-        <ul>{weekdayNamesJSX()}</ul>
-      </nav> */}
       <ul className={classes.weekdays}>
         {props.week.days.map((day, dayIndex) => {
-          return day && <DayListItem day={day} />          
+          const dailyTasks = weeklyTasks.filter(
+            (weeklyTask) => new Date(weeklyTask.date).getDay() === day.dayOfWeek
+          );
+          return (
+            day && <DayListItem day={day} key={dayIndex} tasks={dailyTasks} />
+          );
         })}
       </ul>
+      {taskHasBeenDeleted && (
+        <UndoTask onDoNotUndo={doNotUndoHandler} onUndo={undoHandler} />
+      )}
     </section>
   );
 };
