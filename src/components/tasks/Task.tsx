@@ -2,10 +2,10 @@ import { useRef, useState } from "react";
 import { useAppDispatch } from "../../hooks/store-hooks";
 import { Task as TaskModel } from "../../models/tasks/task";
 import taskSlice from "../../store/task-slice";
-import Button from "../UI/Button";
+import DeleteButton from "../UI/DeleteButton";
+import DeleteTaskPrompt from "./DeleteTaskPrompt";
 import classes from "./Task.module.css";
 import TaskStatus from "./TaskStatus";
-import DeleteTaskPrompt from "./DeleteTaskPrompt";
 
 const Task: React.FC<{ task: TaskModel }> = (props) => {
   const dispatch = useAppDispatch();
@@ -14,7 +14,7 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   const [isEditTitleActive, setIsEditTitleActive] = useState(false);
   const [isTitleVisible, setIsTitleVisible] = useState(true);
   const [isDeleteTaskModalVisible, setIsDeleteTaskModalVisible] =
-    useState(false);
+    useState(false);  
 
   const toggleChangeStatusHandler = (isOpen?: boolean) => {
     if (isOpen === undefined) {
@@ -105,12 +105,7 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
           onBlur={inputBlurHandler}
         />
       )}
-      <Button
-        className={classes["task__delete-btn"]}
-        onClick={showDeleteTaskModalHandler}
-      >
-        X
-      </Button>
+      <DeleteButton onClick={showDeleteTaskModalHandler} />
       {isDeleteTaskModalVisible && (
         <DeleteTaskPrompt
           taskTitle={props.task.title}

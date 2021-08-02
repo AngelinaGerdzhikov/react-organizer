@@ -13,7 +13,7 @@ const taskSlice = createSlice({
     },
     removeTask(state, action) {
       const updatedTasks = state.tasks.filter(task => task.id !== action.payload.id);
-      return { ...state, tasks: updatedTasks };      
+      return { ...state, tasks: updatedTasks, taskHasBeenDeleted: true };      
     },
     updateTaskTitle(state, action) {
       const taskIndex = state.tasks.findIndex(task => task.id === action.payload.id);
@@ -38,6 +38,10 @@ const taskSlice = createSlice({
         return { ...state, tasks: updatedTasks };
       }
       return { ...state };
+    },
+    setTaskHasBeenDeleted(state, action) {
+      const updatedTaskHasBeenDeleted = action.payload;
+      return { ...state, taskHasBeenDeleted: updatedTaskHasBeenDeleted}
     }
   }
 });

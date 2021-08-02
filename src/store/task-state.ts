@@ -2,10 +2,12 @@ import { Task } from "../models/tasks/task";
 import { TaskStatus } from "../models/tasks/task-status.enum";
 
 export interface TaskState {
-  tasks: Task[]
+  tasks: Task[],
+  taskHasBeenDeleted: boolean
 }
 
 export const INITIAL_TASK_STATE: TaskState = {
+  taskHasBeenDeleted: false,
   tasks: [
     { id: 'task_0',
       title: "Code",
