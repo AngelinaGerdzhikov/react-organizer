@@ -3,3 +3,7 @@
   padding-left: 0;
   font-size: 0.9em;
 }
+
+.is-being-dragged-over {
+  border: 1px solid #000;
+}

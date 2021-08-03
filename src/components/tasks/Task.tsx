@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useReducer, useRef, useState } from "react";
 import { useAppDispatch } from "../../hooks/store-hooks";
 import { Task as TaskModel } from "../../models/tasks/task";
 import taskSlice from "../../store/task-slice";
@@ -15,6 +15,7 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   const [isTitleVisible, setIsTitleVisible] = useState(true);
   const [isDeleteTaskModalVisible, setIsDeleteTaskModalVisible] =
     useState(false);  
+  const [ isBeingDragged, setIsBeingDragged ] = useState(false);
 
   const toggleChangeStatusHandler = (isOpen?: boolean) => {
     if (isOpen === undefined) {
@@ -81,8 +82,18 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
     dispatch(taskSlice.actions.removeTask({ id: props.task.id, dateKey: props.task.dateKey }));
   };
 
+  const dragStartHandler = (event: React.DragEvent<HTMLElement>) => {
+    setTimeout(() => {
+      setIsBeingDragged(true);
+  }, 0);
+    console.log('Drag start');
+  };
+
   return (
-    <section className={classes.task}>
+    <section className={`
+        ${classes.task}
+        ${isBeingDragged && classes['is-being-dragged']}
+      `} draggable onDragStart={dragStartHandler}>
       <TaskStatus
         status={props.task.status}
         onToggleChangeStatus={toggleChangeStatusHandler}
