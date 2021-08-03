@@ -1,0 +1,6 @@
+.dragged {
+  opacity: 0;
+}
+.dragged-over {
+  border-top: 1px solid #000;
+}

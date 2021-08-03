@@ -50,6 +50,26 @@ const taskSlice = createSlice({
       }
       return { ...state };
     },
+    moveTask(state, action) {
+      const taskIndexInTasks = state.tasks.findIndex(task => task.id === action.payload.task.id);
+  
+      if (taskIndexInTasks >= 0) {
+        state.tasks[taskIndexInTasks].date = action.payload.targetDateString;
+        state.tasks[taskIndexInTasks].dateKey = action.payload.targetDateKey;
+      }
+
+      const taskIndexInTasksIdsPerDate = state.taskIdsPerDate[action.payload.task.dateKey].findIndex(id => id === action.payload.task.id);
+
+      if (taskIndexInTasksIdsPerDate >= 0) {
+        state.taskIdsPerDate[action.payload.task.dateKey].splice(taskIndexInTasksIdsPerDate, 1);
+        
+        if (state.taskIdsPerDate[action.payload.targetDateKey]) {
+          state.taskIdsPerDate[action.payload.targetDateKey].push(state.tasks[taskIndexInTasks].id);
+        } else {
+          state.taskIdsPerDate[action.payload.targetDateKey] = [state.tasks[taskIndexInTasks].id ];
+        }
+      } 
+    },
     setTaskHasBeenDeleted(state, action) {
       const updatedTaskHasBeenDeleted = action.payload;
       return { ...state, taskHasBeenDeleted: updatedTaskHasBeenDeleted}

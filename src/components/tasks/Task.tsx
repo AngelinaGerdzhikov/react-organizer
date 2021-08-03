@@ -1,4 +1,4 @@
-import React, { useReducer, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useAppDispatch } from "../../hooks/store-hooks";
 import { Task as TaskModel } from "../../models/tasks/task";
 import taskSlice from "../../store/task-slice";
@@ -14,8 +14,8 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   const [isEditTitleActive, setIsEditTitleActive] = useState(false);
   const [isTitleVisible, setIsTitleVisible] = useState(true);
   const [isDeleteTaskModalVisible, setIsDeleteTaskModalVisible] =
-    useState(false);  
-  const [ isBeingDragged, setIsBeingDragged ] = useState(false);
+    useState(false);
+  const [isBeingDragged, setIsBeingDragged] = useState(false);
 
   const toggleChangeStatusHandler = (isOpen?: boolean) => {
     if (isOpen === undefined) {
@@ -79,21 +79,34 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   };
 
   const deleteHandler = () => {
-    dispatch(taskSlice.actions.removeTask({ id: props.task.id, dateKey: props.task.dateKey }));
+    dispatch(
+      taskSlice.actions.removeTask({
+        id: props.task.id,
+        dateKey: props.task.dateKey,
+      })
+    );
   };
 
-  const dragStartHandler = (event: React.DragEvent<HTMLElement>) => {
-    setTimeout(() => {
-      setIsBeingDragged(true);
-  }, 0);
-    console.log('Drag start');
-  };
+  // const dragStartHandler = (event: React.DragEvent<HTMLElement>) => {
+  //   setTimeout(() => {
+  //     setIsBeingDragged(true);
+  //   }, 0);
+  //   console.log("Drag start");
+  // };
+
+  // const dragEndHandler = (event: React.DragEvent<HTMLElement>) => {
+  //   setTimeout(() => {
+  //     setIsBeingDragged(false);
+  //   }, 0);
+  //   console.log("Drag end", event.dataTransfer.getData('text/plain'));
+  // }
 
   return (
-    <section className={`
+    <section
+      className={`
         ${classes.task}
-        ${isBeingDragged && classes['is-being-dragged']}
-      `} draggable onDragStart={dragStartHandler}>
+      `}
+    >
       <TaskStatus
         status={props.task.status}
         onToggleChangeStatus={toggleChangeStatusHandler}
