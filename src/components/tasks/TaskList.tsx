@@ -32,14 +32,20 @@ const TaskList: React.FC<{
   
   const dragEndHandler = (event: React.DragEvent<HTMLElement>) => { }
   
-  const dropHandler = (event: React.DragEvent<HTMLElement>, task: ICalendarItem,) => {
+  const dropHandler = (event: React.DragEvent<HTMLElement>, task?: ICalendarItem,) => {
     const draggedTask: ICalendarItem = JSON.parse(event.dataTransfer.getData('transferData'));
+
+    const date = new Date(
+      Date.UTC(props.year, props.month, props.dayOfMonth)
+    );
+    const targetDateString = task ? task.date : date.toUTCString();
+    const targetDateKey = task ? task.dateKey : `${props.year}${props.month}${props.dayOfMonth}`;;
 
     // if (draggedTask.dateKey !== task.dateKey) {
         dispatch(taskActions.moveTask({ 
           task: draggedTask,
-          targetDateString: task.date,
-          targetDateKey: task.dateKey
+          targetDateString,
+          targetDateKey,
         }))
     // }
     // const updatedTask = new TaskModel(draggedTask.title, )
@@ -48,6 +54,7 @@ const TaskList: React.FC<{
   
   return (
     <ul className={classes["task-list"]}>
+      {props.tasks.length === 0 && <li><DragAndDrop onDrop={(e) => dropHandler(e)}></DragAndDrop></li>}
       {props.tasks.map((task) => (
         <li key={task.id}>
           <DragAndDrop onDrop={(e) => dropHandler(e, task)}>

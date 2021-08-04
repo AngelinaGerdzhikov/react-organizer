@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from "react";
 import classes from './DragAndDrop.module.css';
 
-const DragAndDrop: React.FC<{ children: ReactNode, onDrop: (event: React.DragEvent<HTMLElement>) => void }> = (props) => {
+const DragAndDrop: React.FC<{ onDrop: (event: React.DragEvent<HTMLElement>) => void, children?: ReactNode }> = (props) => {
   const [isBeingDraggedOver, setIsBeingDraggedOver] = useState(false);
 
   const dragEnterHandler = (event: React.DragEvent<HTMLElement>) => {
@@ -44,7 +44,8 @@ const DragAndDrop: React.FC<{ children: ReactNode, onDrop: (event: React.DragEve
         ${isBeingDraggedOver && classes['dragged-over']}
       `}
     >
-      {props.children}
+      {!props.children && <div className={classes.empty}></div>}
+      {props.children && props.children}
     </section>
   );
 };
