@@ -1,4 +1,3 @@
-import { Task } from "../../models/tasks/task";
 import Button from "../UI/Button";
 import Modal from "../UI/Modal";
 import classes from './DeleteTaskPrompt.module.css';

@@ -45,3 +45,7 @@
 .task__title-input:visited {
   border-bottom: 1px dotted #000;
 }
+
+.is-being-dragged {
+  opacity: 0;
+}
