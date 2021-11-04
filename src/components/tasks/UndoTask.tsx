@@ -1,6 +1,6 @@
 import Button from "../UI/Button";
 import { ActionCreators as UndoActionCreators } from 'redux-undo'
-import { useAppDispatch } from "../../hooks/store-hooks";
+import { useAppDispatch } from "../../store/hooks/store-hooks";
 import Prompt from '../UI/Prompt';
 
 interface UndoTaskProps {

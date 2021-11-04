@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppDispatch } from "../../hooks/store-hooks";
+import { useAppDispatch } from "../../store/hooks/store-hooks";
 import ICalendarItem from "../../models/tasks/calendar-item.interface";
 import { Task as TaskModel } from "../../models/tasks/task";
 import { taskActions } from "../../store/task-slice";
@@ -8,6 +8,8 @@ import Draggable from "../UI/Draggable";
 import AddTask from "./AddTask";
 import Task from "./Task";
 import classes from "./TaskList.module.css";
+import { TaskStatus } from "../../models/tasks/task-status.enum";
+import { addTaskAsync } from "../../store/task-thunks";
 
 const TaskList: React.FC<{
   tasks: TaskModel[];
@@ -22,7 +24,11 @@ const TaskList: React.FC<{
       Date.UTC(props.year, props.month, props.dayOfMonth)
     ).toUTCString();
     const task = new TaskModel(title, taskDate);
-    dispatch(taskActions.addTask({ ...task }));
+    dispatch(addTaskAsync({ 
+      title, 
+      date: taskDate,
+      status: TaskStatus.TO_DO
+    }));
   };
 
   const dragStartHandler = (event: React.DragEvent<HTMLElement>) => { 

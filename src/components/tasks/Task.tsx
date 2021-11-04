@@ -1,11 +1,13 @@
 import React, { useRef, useState } from "react";
-import { useAppDispatch } from "../../hooks/store-hooks";
+import { useAppDispatch } from "../../store/hooks/store-hooks";
 import { Task as TaskModel } from "../../models/tasks/task";
 import taskSlice from "../../store/task-slice";
 import DeleteButton from "../UI/DeleteButton";
 import DeleteTaskPrompt from "./DeleteTaskPrompt";
 import classes from "./Task.module.css";
 import TaskStatus from "./TaskStatus";
+import { deleteTaskAsync, updateTaskAsync } from "../../store/task-thunks";
+import { TaskStatus as TaskStatusEnum } from "../../models/tasks/task-status.enum";
 
 const Task: React.FC<{ task: TaskModel }> = (props) => {
   const dispatch = useAppDispatch();
@@ -25,13 +27,19 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
     }
   };
 
-  const changeStatusHandler = (status: string) => {
-    dispatch(
-      taskSlice.actions.updateTaskStatus({
-        id: props.task.id,
-        newStatus: status,
-      })
+  const changeStatusHandler = (status: TaskStatusEnum) => {
+
+    dispatch(updateTaskAsync( {
+      ...props.task,
+      status: status
+    })
     );
+    // dispatch(
+    //   taskSlice.actions.updateTaskStatus({
+    //     id: props.task.id,
+    //     newStatus: status,
+    //   })
+    // );
   };
 
   const clickTitleHandler = () => {
@@ -79,12 +87,13 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   };
 
   const deleteHandler = () => {
-    dispatch(
-      taskSlice.actions.removeTask({
-        id: props.task.id,
-        dateKey: props.task.dateKey,
-      })
-    );
+    // dispatch(
+    //   taskSlice.actions.removeTask({
+    //     id: props.task.id,
+    //     dateKey: props.task.dateKey,
+    //   })
+    // );
+    dispatch(deleteTaskAsync(props.task.id));
   };
 
   // const dragStartHandler = (event: React.DragEvent<HTMLElement>) => {

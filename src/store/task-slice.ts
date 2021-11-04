@@ -1,6 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import ICalendarItem from '../models/tasks/calendar-item.interface';
-import { INITIAL_TASK_STATE } from './task-state';
+import { Task } from '../models/tasks/task';
+import { INITIAL_TASK_STATE, MOCK_TASKS } from './task-state';
+import { addTaskAsync, deleteTaskAsync, fetchTasksAsync, updateTaskAsync } from './task-thunks';
 
 const taskSlice = createSlice({
   name: 'task',
@@ -74,6 +76,55 @@ const taskSlice = createSlice({
       const updatedTaskHasBeenDeleted = action.payload;
       return { ...state, taskHasBeenDeleted: updatedTaskHasBeenDeleted}
     }
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchTasksAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchTasksAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.newTasks = action.payload;
+      })
+      .addCase(fetchTasksAsync.rejected, (state) => {
+        state.status = 'failed';
+      })
+
+      .addCase(addTaskAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(addTaskAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.newTasks.push(action.payload);
+      })
+      .addCase(addTaskAsync.rejected, (state) => {
+        state.status = 'failed';
+      })
+
+      .addCase(deleteTaskAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteTaskAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.newTasks = state.newTasks.filter(task => task.id !== action.payload.id);
+      })
+      .addCase(deleteTaskAsync.rejected, (state) => {
+        state.status = 'failed';
+      })
+
+      .addCase(updateTaskAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(updateTaskAsync.fulfilled, (state, action) => {
+        state.status = 'idle';
+        const taskIndex = state.newTasks.findIndex(task =>
+          task.id === action.payload.id);
+          console.log(taskIndex);
+        state.newTasks[taskIndex].status = action.payload.status;
+      })
+      .addCase(updateTaskAsync.rejected, (state) => {
+        state.status = 'failed';
+      })
   }
 });
 

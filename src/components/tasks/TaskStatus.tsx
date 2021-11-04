@@ -11,7 +11,7 @@ import OutsideClickHandler from "../UI/OutsideClickHandler";
 const TaskStatus: React.FC<{
   status: TaskStatusEnum;
   onToggleChangeStatus: (isOpen?: boolean) => void;
-  onChangeStatus: (status: string) => void;
+  onChangeStatus: (status: TaskStatusEnum) => void;
 }> = (props) => {
   const [isChangeStatusOpen, setIsChangeStatusOpen] = useState(false);
   const { status } = props;
@@ -29,7 +29,7 @@ const TaskStatus: React.FC<{
 
   const changeStatusHandler = (status: string) => {
     setIsChangeStatusOpen((status) => (status = !status));
-    props.onChangeStatus(status);
+    props.onChangeStatus(status as TaskStatusEnum);
     props.onToggleChangeStatus();
   }
 
@@ -73,7 +73,10 @@ const TaskStatus: React.FC<{
                   }
                   ${taskStatus === status && classes["task-status--current"]}
                 `}
-                onClick={() => changeStatusHandler(taskStatus)}
+                onClick={() => {
+
+                  changeStatusHandler(taskStatus as TaskStatusEnum)
+                }}
               >
                 {statusSvgJSX(taskStatus)}
               </div>
