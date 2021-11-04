@@ -56,26 +56,36 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   };
 
   const keyDownHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && inputTitleRef.current?.value) {
       setTitleInputValue(event.currentTarget.value);
       setIsEditTitleActive(false);
-      dispatch(
-        taskSlice.actions.updateTaskTitle({
-          id: props.task.id,
-          title: inputTitleRef.current?.value,
-        })
-      );
+      dispatch(updateTaskAsync({
+        ...props.task,
+        title: inputTitleRef.current?.value
+      }));
+            // dispatch(
+      //   taskSlice.actions.updateTaskTitle({
+      //     id: props.task.id,
+      //     title: inputTitleRef.current?.value,
+      //   })
+      // );
     }
   };
 
   const inputBlurHandler = (event: React.FormEvent<HTMLInputElement>) => {
     setIsEditTitleActive(false);
-    dispatch(
-      taskSlice.actions.updateTaskTitle({
-        id: props.task.id,
-        title: event.currentTarget.value,
-      })
-    );
+    if (inputTitleRef.current?.value) {
+      dispatch(updateTaskAsync({
+        ...props.task,
+        title: inputTitleRef.current?.value
+      }));
+    }
+    // dispatch(
+    //   taskSlice.actions.updateTaskTitle({
+    //     id: props.task.id,
+    //     title: event.currentTarget.value,
+    //   })
+    // );
   };
 
   const showDeleteTaskModalHandler = () => {

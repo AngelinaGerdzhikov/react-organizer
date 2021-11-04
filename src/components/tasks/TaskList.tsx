@@ -9,7 +9,7 @@ import AddTask from "./AddTask";
 import Task from "./Task";
 import classes from "./TaskList.module.css";
 import { TaskStatus } from "../../models/tasks/task-status.enum";
-import { addTaskAsync } from "../../store/task-thunks";
+import { addTaskAsync, updateTaskAsync } from "../../store/task-thunks";
 
 const TaskList: React.FC<{
   tasks: TaskModel[];
@@ -48,11 +48,17 @@ const TaskList: React.FC<{
     const targetDateKey = task ? task.dateKey : `${props.year}${props.month}${props.dayOfMonth}`;;
 
     // if (draggedTask.dateKey !== task.dateKey) {
-        dispatch(taskActions.moveTask({ 
-          task: draggedTask,
-          targetDateString,
-          targetDateKey,
-        }))
+        console.log(date.toUTCString());
+        dispatch(updateTaskAsync({
+          ...draggedTask,
+          date: date.toUTCString()
+        }));
+        
+        // dispatch(taskActions.moveTask({ 
+        //   task: draggedTask,
+        //   targetDateString,
+        //   targetDateKey,
+        // }))
     // }
     // const updatedTask = new TaskModel(draggedTask.title, )
     console.log("Dragged task", draggedTask);

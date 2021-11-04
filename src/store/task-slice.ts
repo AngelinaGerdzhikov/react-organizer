@@ -120,7 +120,8 @@ const taskSlice = createSlice({
         const taskIndex = state.newTasks.findIndex(task =>
           task.id === action.payload.id);
           console.log(taskIndex);
-        state.newTasks[taskIndex].status = action.payload.status;
+        state.newTasks[taskIndex] = action.payload;
+        console.log( `Updated task: ${JSON.stringify(state.newTasks[taskIndex])}`);
       })
       .addCase(updateTaskAsync.rejected, (state) => {
         state.status = 'failed';
