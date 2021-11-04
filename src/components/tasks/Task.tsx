@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
-import { useAppDispatch } from "../../store/hooks/store-hooks";
+
 import { Task as TaskModel } from "../../models/tasks/task";
-import taskSlice from "../../store/task-slice";
+import { TaskStatus as TaskStatusEnum } from "../../models/tasks/task-status.enum";
+import { useAppDispatch } from "../../store/hooks/store-hooks";
+import { deleteTaskAsync, updateTaskAsync } from "../../store/task-thunks";
 import DeleteButton from "../UI/DeleteButton";
 import DeleteTaskPrompt from "./DeleteTaskPrompt";
 import classes from "./Task.module.css";
 import TaskStatus from "./TaskStatus";
-import { deleteTaskAsync, updateTaskAsync } from "../../store/task-thunks";
-import { TaskStatus as TaskStatusEnum } from "../../models/tasks/task-status.enum";
 
 const Task: React.FC<{ task: TaskModel }> = (props) => {
   const dispatch = useAppDispatch();
@@ -17,7 +17,7 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   const [isTitleVisible, setIsTitleVisible] = useState(true);
   const [isDeleteTaskModalVisible, setIsDeleteTaskModalVisible] =
     useState(false);
-  const [isBeingDragged, setIsBeingDragged] = useState(false);
+  // const [isBeingDragged, setIsBeingDragged] = useState(false);
 
   const toggleChangeStatusHandler = (isOpen?: boolean) => {
     if (isOpen === undefined) {
@@ -28,11 +28,11 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   };
 
   const changeStatusHandler = (status: TaskStatusEnum) => {
-
-    dispatch(updateTaskAsync( {
-      ...props.task,
-      status: status
-    })
+    dispatch(
+      updateTaskAsync({
+        ...props.task,
+        status: status,
+      })
     );
     // dispatch(
     //   taskSlice.actions.updateTaskStatus({
@@ -59,11 +59,13 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
     if (event.key === "Enter" && inputTitleRef.current?.value) {
       setTitleInputValue(event.currentTarget.value);
       setIsEditTitleActive(false);
-      dispatch(updateTaskAsync({
-        ...props.task,
-        title: inputTitleRef.current?.value
-      }));
-            // dispatch(
+      dispatch(
+        updateTaskAsync({
+          ...props.task,
+          title: inputTitleRef.current?.value,
+        })
+      );
+      // dispatch(
       //   taskSlice.actions.updateTaskTitle({
       //     id: props.task.id,
       //     title: inputTitleRef.current?.value,
@@ -75,10 +77,12 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   const inputBlurHandler = (event: React.FormEvent<HTMLInputElement>) => {
     setIsEditTitleActive(false);
     if (inputTitleRef.current?.value) {
-      dispatch(updateTaskAsync({
-        ...props.task,
-        title: inputTitleRef.current?.value
-      }));
+      dispatch(
+        updateTaskAsync({
+          ...props.task,
+          title: inputTitleRef.current?.value,
+        })
+      );
     }
     // dispatch(
     //   taskSlice.actions.updateTaskTitle({
