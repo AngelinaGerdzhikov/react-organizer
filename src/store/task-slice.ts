@@ -13,16 +13,16 @@ const taskSlice = createSlice({
   name: "task",
   initialState: INITIAL_TASK_STATE,
   reducers: {
-    addTask(state, action) {
-      const newTask: ICalendarItem = { ...action.payload };
-      state.tasks.push(newTask);
+    // addTask(state, action) {
+    //   const newTask: ICalendarItem = { ...action.payload };
+    //   state.tasks.push(newTask);
 
-      if (state.taskIdsPerDate[newTask.dateKey]) {
-        state.taskIdsPerDate[newTask.dateKey].push(newTask.id);
-      } else {
-        state.taskIdsPerDate[newTask.dateKey] = [newTask.id];
-      }
-    },
+    //   if (state.taskIdsPerDate[newTask.dateKey]) {
+    //     state.taskIdsPerDate[newTask.dateKey].push(newTask.id);
+    //   } else {
+    //     state.taskIdsPerDate[newTask.dateKey] = [newTask.id];
+    //   }
+    // },
     removeTask(state, action) {
       const updatedTasks = state.tasks.filter(
         (task) => task.id !== action.payload.id
@@ -69,37 +69,37 @@ const taskSlice = createSlice({
       }
       return { ...state };
     },
-    moveTask(state, action) {
-      const taskIndexInTasks = state.tasks.findIndex(
-        (task) => task.id === action.payload.task.id
-      );
+    // moveTask(state, action) {
+    //   const taskIndexInTasks = state.tasks.findIndex(
+    //     (task) => task.id === action.payload.task.id
+    //   );
 
-      if (taskIndexInTasks >= 0) {
-        state.tasks[taskIndexInTasks].date = action.payload.targetDateString;
-        state.tasks[taskIndexInTasks].dateKey = action.payload.targetDateKey;
-      }
+    //   if (taskIndexInTasks >= 0) {
+    //     state.tasks[taskIndexInTasks].date = action.payload.targetDateString;
+    //     state.tasks[taskIndexInTasks].dateKey = action.payload.targetDateKey;
+    //   }
 
-      const taskIndexInTasksIdsPerDate = state.taskIdsPerDate[
-        action.payload.task.dateKey
-      ].findIndex((id) => id === action.payload.task.id);
+    //   const taskIndexInTasksIdsPerDate = state.taskIdsPerDate[
+    //     action.payload.task.dateKey
+    //   ].findIndex((id) => id === action.payload.task.id);
 
-      if (taskIndexInTasksIdsPerDate >= 0) {
-        state.taskIdsPerDate[action.payload.task.dateKey].splice(
-          taskIndexInTasksIdsPerDate,
-          1
-        );
+    //   if (taskIndexInTasksIdsPerDate >= 0) {
+    //     state.taskIdsPerDate[action.payload.task.dateKey].splice(
+    //       taskIndexInTasksIdsPerDate,
+    //       1
+    //     );
 
-        if (state.taskIdsPerDate[action.payload.targetDateKey]) {
-          state.taskIdsPerDate[action.payload.targetDateKey].push(
-            state.tasks[taskIndexInTasks].id
-          );
-        } else {
-          state.taskIdsPerDate[action.payload.targetDateKey] = [
-            state.tasks[taskIndexInTasks].id,
-          ];
-        }
-      }
-    },
+    //     if (state.taskIdsPerDate[action.payload.targetDateKey]) {
+    //       state.taskIdsPerDate[action.payload.targetDateKey].push(
+    //         state.tasks[taskIndexInTasks].id
+    //       );
+    //     } else {
+    //       state.taskIdsPerDate[action.payload.targetDateKey] = [
+    //         state.tasks[taskIndexInTasks].id,
+    //       ];
+    //     }
+    //   }
+    // },
     setTaskHasBeenDeleted(state, action) {
       const updatedTaskHasBeenDeleted = action.payload;
       return { ...state, taskHasBeenDeleted: updatedTaskHasBeenDeleted };

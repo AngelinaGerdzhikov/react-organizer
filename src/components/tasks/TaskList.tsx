@@ -22,7 +22,7 @@ const TaskList: React.FC<{
   const addTaskHandler = (title: string) => {
     const taskDate = new Date(
       Date.UTC(props.year, props.month, props.dayOfMonth)
-    ).toUTCString();
+    );
     // const task = new TaskModel(title, taskDate);
     dispatch(
       addTaskAsync({
@@ -44,9 +44,9 @@ const TaskList: React.FC<{
 
   const dropHandler = (
     event: React.DragEvent<HTMLElement>,
-    task?: ICalendarItem
+    task?: TaskModel
   ) => {
-    const draggedTask: ICalendarItem = JSON.parse(
+    const draggedTask: TaskModel = JSON.parse(
       event.dataTransfer.getData("transferData")
     );
 
@@ -61,7 +61,7 @@ const TaskList: React.FC<{
     dispatch(
       updateTaskAsync({
         ...draggedTask,
-        date: date.toUTCString(),
+        date: date,
       })
     );
 

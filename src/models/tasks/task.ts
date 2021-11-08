@@ -1,16 +1,17 @@
 import { TaskStatus } from "./task-status.enum";
 import ICalendarItem from "./calendar-item.interface";
 
-export class Task implements ICalendarItem {
-  dateKey: string;
+export class Task {
+  // dateKey: string;
+  date: Date = new Date();
 
   constructor(
     public title: string,
-    public date: string,
+    public timestamp: string,
     public status: TaskStatus = TaskStatus.TO_DO,
     public readonly id: string = new Date().toUTCString(),
   ) { 
-    const taskDate = new Date(date);
-    this.dateKey = `${taskDate.getFullYear()}${taskDate.getMonth()}${taskDate.getDate()}`;
+    const date = new Date(timestamp);
+    // this.dateKey = `${taskDate.getFullYear()}${taskDate.getMonth()}${taskDate.getDate()}`;
   }
 }

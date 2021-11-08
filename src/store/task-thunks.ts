@@ -1,46 +1,49 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import ICalendarItem from "../models/tasks/calendar-item.interface";
 
 import { Task } from "../models/tasks/task";
 import { TaskStatus } from "../models/tasks/task-status.enum";
 
-export function fetchTasks() {
+export function fetchTasks(startDate?: string, endDate?: string) {
+  const query = `?orderBy="date"`;
   return fetch(
-    `https://react-organizer-7a62e-default-rtdb.firebaseio.com/tasks.json`
+    `https://react-organizer-7a62e-default-rtdb.firebaseio.com/tasks.json` + query
   );
 }
 
-export const fetchTasksAsync = createAsyncThunk<Task[]>(
+export const fetchTasksAsync = createAsyncThunk<ICalendarItem[]>(
   "tasks/fetchTasks",
   async () => {
-    const response = await fetch(
-      `https://react-organizer-7a62e-default-rtdb.firebaseio.com/tasks.json`
-    );
+    const response = await fetchTasks();
     const data = await response.json();
 
-    const loadedTasks: Task[] = [];
+    const loadedTasks: ICalendarItem[] = [];
     for (const key in data) {
       loadedTasks.push({
         id: key,
         title: data[key].title,
-        date: data[key].date,
+        timestamp: data[key].timestamp,
         status: data[key].status,
-      } as Task);
+      });
     }
     return loadedTasks;
   }
 );
 
 export const addTaskAsync = createAsyncThunk<
-  Task,
-  { title: string; date: string; status: TaskStatus }
+  ICalendarItem,
+  { title: string; date: Date; status: TaskStatus }
 >(
   "tasks/addTask",
-  async (task: { title: string; date: string; status: TaskStatus }) => {
+  async (task: { title: string; date: Date; status: TaskStatus }) => {
     const response = await fetch(
       `https://react-organizer-7a62e-default-rtdb.firebaseio.com/tasks.json`,
       {
         method: "POST",
-        body: JSON.stringify(task),
+        body: JSON.stringify({
+          ...task,
+          date: task.date
+        }),
         headers: { "Content-Type": "application/json" },
       }
     );
@@ -48,9 +51,9 @@ export const addTaskAsync = createAsyncThunk<
     return {
       id: data.name,
       title: task.title,
-      date: task.date,
+      timestamp: task.date.toUTCString(),
       status: task.status,
-    } as Task;
+    } as ICalendarItem;
   }
 );
 
@@ -83,7 +86,7 @@ export const updateTaskAsync = createAsyncThunk<Task, Task>(
     return {
       id: data.id,
       title: task.title,
-      date: task.date,
+      timestamp: task.date.toUTCString(),
       status: task.status,
     } as Task;
   }

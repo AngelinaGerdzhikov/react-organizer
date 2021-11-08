@@ -1,23 +1,25 @@
-import { useAppDispatch, useAppSelector } from "../../../store/hooks/store-hooks";
 import CalendarDay from "../../../models/calendar/calendar-day";
+import ICalendarItem from "../../../models/tasks/calendar-item.interface";
+import { Task } from "../../../models/tasks/task";
+import { useAppSelector } from "../../../store/hooks/store-hooks";
 import TaskList from "../../tasks/TaskList";
 import classes from "./DayListItem.module.css";
-import { useEffect } from "react";
-import { fetchTasksAsync } from "../../../store/task-thunks";
 
 const DayListItem: React.FC<{ day: CalendarDay }> = (props) => {
   const { year, month, dayOfMonth, dayOfWeekFullName } = props.day;
-  const newTasks = useAppSelector(state => state.tasks.present.newTasks);
-  const dispatch = useAppDispatch();
+  const newTasks = useAppSelector(state => {
+    return state.tasks.present.newTasks.map((task: ICalendarItem) => {
+      return new Task(task.title, task.timestamp, task.status, task.id);
+    })
+  });
+  // const dispatch = useAppDispatch();
   // const dayTasks = useAppSelector(state => {
   //   const dayKey = `${year}${month}${dayOfMonth}`;
   //   const taskKeys = state.tasks.present.taskIdsPerDate[dayKey];
   //   return taskKeys && taskKeys.length > 0 && state.tasks.present.tasks.filter(task => taskKeys.includes(task.id) );    
   // });
 
-  useEffect(() => {
-    dispatch(fetchTasksAsync());
-  }, [dispatch]);
+ 
 
   return (
     <li key={dayOfMonth} className={classes.day}>
