@@ -2,14 +2,14 @@ import { TaskStatus } from "./task-status.enum";
 import ICalendarItem from "./calendar-item.interface";
 
 export class Task {
-  date: Date = new Date();
+  // date: Date = new Date();
 
   constructor(
     public title: string,
-    public timestamp: string,
-    public status: TaskStatus = TaskStatus.TO_DO,
-    public readonly id: string = new Date().toUTCString(),
+    public due_date: Date,
+    public status: TaskStatus,
+    public readonly id: string,
   ) { 
-    this.date = new Date(timestamp);
+    // this.date = new Date(timestamp);
   }
 }

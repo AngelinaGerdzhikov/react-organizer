@@ -15,16 +15,16 @@ export const fetchTasksAsync = createAsyncThunk<ICalendarItem[]>(
 
 export const addTaskAsync = createAsyncThunk<
   ICalendarItem,
-  { title: string; date: Date; status: TaskStatus }
+  { title: string; due_date: Date; status: TaskStatus }
 >(
   "tasks/addTask",
-  async (task: { title: string; date: Date; status: TaskStatus }) => {
-    const taskKey = await addTask(task.title, task.date, task.status);
+  async (task: { title: string; due_date: Date; status: TaskStatus }) => {
+    const taskKey = await addTask(task.title, task.due_date, task.status);
   
     return {
       id: taskKey,
       title: task.title,
-      timestamp: task.date.toUTCString(),
+      due_date: task.due_date,
       status: task.status,
     } as ICalendarItem;
 
@@ -47,7 +47,7 @@ export const updateTaskAsync = createAsyncThunk<Task, Task>(
     return {
       id: task.id,
       title: task.title,
-      timestamp: task.date.toUTCString(),
+      due_date: task.due_date,
       status: task.status,
     } as Task;
   }

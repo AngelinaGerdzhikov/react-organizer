@@ -65,12 +65,6 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
           title: inputTitleRef.current?.value,
         })
       );
-      // dispatch(
-      //   taskSlice.actions.updateTaskTitle({
-      //     id: props.task.id,
-      //     title: inputTitleRef.current?.value,
-      //   })
-      // );
     }
   };
 
@@ -84,12 +78,6 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
         })
       );
     }
-    // dispatch(
-    //   taskSlice.actions.updateTaskTitle({
-    //     id: props.task.id,
-    //     title: event.currentTarget.value,
-    //   })
-    // );
   };
 
   const showDeleteTaskModalHandler = () => {
@@ -101,12 +89,6 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
   };
 
   const deleteHandler = () => {
-    // dispatch(
-    //   taskSlice.actions.removeTask({
-    //     id: props.task.id,
-    //     dateKey: props.task.dateKey,
-    //   })
-    // );
     dispatch(deleteTaskAsync(props.task.id));
   };
 

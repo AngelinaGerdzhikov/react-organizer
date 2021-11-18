@@ -1,4 +1,4 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { configureStore, ThunkAction, Action, getDefaultMiddleware } from "@reduxjs/toolkit";
 import taskSlice from "./task-slice";
 import undoable from "redux-undo";
 
@@ -6,6 +6,9 @@ const store = configureStore({
   reducer: {
     tasks: undoable(taskSlice.reducer),
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false
+  })
 });
 
 export type RootState = ReturnType<typeof store.getState>;

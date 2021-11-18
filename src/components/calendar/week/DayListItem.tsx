@@ -8,8 +8,9 @@ import classes from "./DayListItem.module.css";
 const DayListItem: React.FC<{ day: CalendarDay }> = (props) => {
   const { year, month, dayOfMonth, dayOfWeekFullName } = props.day;
   const newTasks = useAppSelector(state => {
-    return state.tasks.present.newTasks.map((task: ICalendarItem) => {
-      return new Task(task.title, task.timestamp, task.status, task.id);
+    return state.tasks.present.tasks.map((task: ICalendarItem) => {
+      console.log('task');
+      return new Task(task.title, task.due_date, task.status, task.id);
     })
   });
   // const dispatch = useAppDispatch();

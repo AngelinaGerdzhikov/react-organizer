@@ -1,64 +1,64 @@
-import db from '../config/firebase';
-import { ref, get, push, remove, update, child } from 'firebase/database';
 import ICalendarItem from '../models/tasks/calendar-item.interface';
-import { TaskStatus } from '../models/tasks/task-status.enum';
 import { Task } from '../models/tasks/task';
+import { TaskStatus } from '../models/tasks/task-status.enum';
+import { TASKS_API_PATH } from './config';
 
-const TASKS_PATH = 'tasks/';
-
-export const getTasks = async (): Promise<ICalendarItem[]> => {
-  const tasksRef = ref(db, TASKS_PATH);
-  const loadedTasks: ICalendarItem[] = [];
-  const snapshot = await get(tasksRef);
-
-  if (snapshot.exists()) {
-    const data = snapshot.val();
-
-    for (const key in data) {
-      loadedTasks.push({
-        id: key,
-        title: data[key].title,
-        timestamp: data[key].timestamp,
-        status: data[key].status,
-      });
-    }
-
-    return loadedTasks;
-  } else {
-    return loadedTasks;
+export const getTasks = async (year = 2021, week = 13): Promise<ICalendarItem[]> => {
+  const response = await fetch(`${TASKS_API_PATH}/year/${year}/week/${week}`);
+  let tasks: ICalendarItem[] = [];
+  
+  if (response) {
+    tasks = await response.json();
+    return tasks;
   }
+
+  return tasks;
 }
 
 export const addTask = async (
-  title: string, date: Date, status: TaskStatus
+  title: string, due_date: Date, status: TaskStatus
 ): Promise<string> => {
 
-  const newTaskKey = await push(child(ref(db), TASKS_PATH), {
-    title,
-    timestamp: date.toUTCString(),
-    status
-  }).key;
+  const response = await fetch('http://localhost:3001/api/tasks', {
+    method: 'POST',
+    body: JSON.stringify({
+      title,
+      due_date: due_date.toUTCString(),
+      status_id: status.id
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
+  });
 
-  if (newTaskKey) return newTaskKey;
+  const newTask = await response.json();
+
+  if (newTask) return newTask.id;
   else throw new Error('Could not create task');
 };
 
 export const deleteTask = async (id: string): Promise<void> => {
-  const taskRef = ref(db, TASKS_PATH + id);
-
-  return remove(taskRef).catch(err => {
-    throw err
+  const response = await fetch(`http://localhost:3001/api/tasks/${id}`, {
+    method: 'DELETE',
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    }
   });
+  return response.json()
+  .then(() => {})
+  .catch(err => { throw new Error(err.message) });
+ 
 }
 
 export const updateTask = async (task: Task): Promise<void> => {
-  const taskRef = ref(db, TASKS_PATH + task.id);
-  
-  return update(taskRef, {
-    title: task.title,
-    status: task.status,
-    timestamp: task.date.toUTCString()
-  }).catch(err => {
-    throw err;
-  })
+  const response = await fetch(`http://localhost:3001/api/tasks/${task.id}`, {
+    method: 'PUT',
+    headers: {
+      "Content-type": "application/json; charset=UTF-8"
+    },
+    body: JSON.stringify({ ...task, status_id: task.status.id })
+  });
+  return response.json()
+    .then(() => {})
+    .catch(err => { throw new Error(err )});  
 }

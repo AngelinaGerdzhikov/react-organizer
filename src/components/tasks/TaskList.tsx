@@ -27,8 +27,8 @@ const TaskList: React.FC<{
     dispatch(
       addTaskAsync({
         title,
-        date: taskDate,
-        status: TaskStatus.TO_DO,
+        due_date: taskDate,
+        status: { id: 1, title: 'TO_DO' },
       })
     );
   };
@@ -61,7 +61,7 @@ const TaskList: React.FC<{
     dispatch(
       updateTaskAsync({
         ...draggedTask,
-        date: date,
+        due_date: date,
       })
     );
 
