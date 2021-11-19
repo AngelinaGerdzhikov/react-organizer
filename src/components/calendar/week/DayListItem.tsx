@@ -5,12 +5,13 @@ import { useAppSelector } from "../../../store/hooks/store-hooks";
 import TaskList from "../../tasks/TaskList";
 import classes from "./DayListItem.module.css";
 
-const DayListItem: React.FC<{ day: CalendarDay }> = (props) => {
+const DayListItem: React.FC<{ day: CalendarDay, tasks: Task[] }> = (props) => {
   const { year, month, dayOfMonth, dayOfWeekFullName } = props.day;
   const newTasks = useAppSelector(state => {
-    return state.tasks.present.tasks.map((task: ICalendarItem) => {
-      console.log('task');
-      return new Task(task.title, task.due_date, task.status, task.id);
+    return state.tasks.present.tasks.filter((task: ICalendarItem) => {
+      const newTask = new Task(task.title, task.due_date, task.status, task.id);
+      const taskDayOfWeek = new Date(newTask.due_date).getDay();
+      return taskDayOfWeek === props.day.dayOfWeek;
     })
   });
   // const dispatch = useAppDispatch();
@@ -29,7 +30,7 @@ const DayListItem: React.FC<{ day: CalendarDay }> = (props) => {
       {/* {newTasks && newTasks.map(newTask => <div>{newTask.title}</div>)} */}
       <span className={classes.date}>{dayOfMonth}</span>
       <TaskList
-        tasks={newTasks || []}
+        tasks={newTasks|| []}
         year={year}
         month={month}
         dayOfMonth={dayOfMonth}

@@ -8,8 +8,8 @@ const WeekDetails: React.FC<{ week: CalendarWeek }> = (props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchTasksAsync());
-  }, [dispatch]);
+    dispatch(fetchTasksAsync( { year: props.week.year, week: props.week.nthWeekOfYear }));
+  }, [dispatch, props.week]);
 
   return (
     <DayList week={props.week} />

@@ -3,12 +3,15 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import ICalendarItem from "../models/tasks/calendar-item.interface";
 import { Task } from "../models/tasks/task";
 import { TaskStatus } from "../models/tasks/task-status.enum";
-import { addTask, deleteTask, getTasks, updateTask } from "../services/task.service";
+import { addTask, deleteTask, getTasksByWeek, updateTask } from "../services/task.service";
 
-export const fetchTasksAsync = createAsyncThunk<ICalendarItem[]>(
+export const fetchTasksAsync = createAsyncThunk<
+  ICalendarItem[],
+  { year: number; week: number }
+>(
   "tasks/fetchTasks",
-  async () => {
-    const tasks = await getTasks();
+  async ( week: { year: number;  week: number }) => {
+    const tasks = await getTasksByWeek(week.year, week.week);
     return tasks || [];
   }
 );

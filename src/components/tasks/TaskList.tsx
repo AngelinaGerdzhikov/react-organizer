@@ -50,7 +50,7 @@ const TaskList: React.FC<{
       event.dataTransfer.getData("transferData")
     );
 
-    const date = new Date(Date.UTC(props.year, props.month, props.dayOfMonth));
+    const date = new Date(props.year, props.month, props.dayOfMonth);
     // const targetDateString = task ? task.date : date.toUTCString();
     // const targetDateKey = task
     //   ? task.dateKey
