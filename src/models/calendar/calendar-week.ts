@@ -16,13 +16,7 @@ class CalendarWeek {
     public readonly days: CalendarDay[],
     public readonly nthWeekOfMonth: number
   ) {
-    if (nthWeekOfMonth === 0) {
-      this.firstDayOfWeek =
-        this.days.find((day) => day.date.getDate() === 1) ||
-        new CalendarDay(new Date(this.year, this.month));
-    } else {
-      this.firstDayOfWeek = this.days[0];
-    }
+    this.firstDayOfWeek = this.days[0];
     this.firstDayOfWeekNumber = this.firstDayOfWeek.dayOfWeek;
     this.firstDayOfWeekFullName = this.firstDayOfWeek.dayOfWeekFullName;
     this.month = this.firstDayOfWeek.month;
@@ -33,7 +27,6 @@ class CalendarWeek {
   }
 
   private getDateRange() {
-    // console.log('this.days')
     const isWeekInSameMonth = this.days[0].month === this.days[6].month;
 
     if (!isWeekInSameMonth) {
