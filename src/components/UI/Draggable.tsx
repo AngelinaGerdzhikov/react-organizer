@@ -4,8 +4,8 @@ import classes from "./DragAndDrop.module.css";
 const Draggable: React.FC<{
   children: ReactNode;
   transferData: any,
-  onDragStart: (event: React.DragEvent<HTMLElement>) => void;
-  onDragEnd: (event: React.DragEvent<HTMLElement>) => void;
+  onDragStart?: (event: React.DragEvent<HTMLElement>) => void;
+  onDragEnd?: (event: React.DragEvent<HTMLElement>) => void;
 }> = (props) => {
   const [isBeingDragged, setIsBeingDragged] = useState(false);
 
@@ -15,13 +15,13 @@ const Draggable: React.FC<{
       setIsBeingDragged(true);
     }, 0);
     console.log("Drag start");
-    props.onDragStart(event);
+    if (props.onDragStart) props.onDragStart(event);
   };
   
   const dragEndHandler = (event: React.DragEvent<HTMLElement>, dataTransfer: any) => {
     event.dataTransfer.setData('transferData', JSON.stringify(dataTransfer));
     setIsBeingDragged(false);
-    props.onDragEnd(event);
+    if (props.onDragEnd) props.onDragEnd(event);
     // add it to the drop target
     // event.currentTarget.appendChild(draggable);
 

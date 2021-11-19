@@ -92,20 +92,6 @@ const Task: React.FC<{ task: TaskModel }> = (props) => {
     dispatch(deleteTaskAsync(props.task.id));
   };
 
-  // const dragStartHandler = (event: React.DragEvent<HTMLElement>) => {
-  //   setTimeout(() => {
-  //     setIsBeingDragged(true);
-  //   }, 0);
-  //   console.log("Drag start");
-  // };
-
-  // const dragEndHandler = (event: React.DragEvent<HTMLElement>) => {
-  //   setTimeout(() => {
-  //     setIsBeingDragged(false);
-  //   }, 0);
-  //   console.log("Drag end", event.dataTransfer.getData('text/plain'));
-  // }
-
   return (
     <section
       className={`

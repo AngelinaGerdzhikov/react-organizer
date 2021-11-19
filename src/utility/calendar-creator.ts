@@ -112,8 +112,8 @@ class CalendarCreator {
     const oneJan = new Date(firstDayOfWeek.getFullYear(),0,1);
     const numberOfDays = Math.floor((firstDayOfWeek.valueOf() - oneJan.valueOf()) / (24 * 60 * 60 * 1000));
     const result = Math.ceil(( firstDayOfWeek.getDay() + 1 + numberOfDays) / 7);
-    return result;
     console.log(`The week number of the current date (${firstDayOfWeek}) is ${result}.`);
+    return result;
   }
 
 }
