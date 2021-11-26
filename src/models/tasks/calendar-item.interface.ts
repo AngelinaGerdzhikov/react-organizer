@@ -2,8 +2,7 @@ import { TaskStatus } from "./task-status.enum";
 
 interface ICalendarItem {
   title: string,
-  date: string,
-  dateKey: string
+  due_date: Date,
   status: TaskStatus,
   readonly id: string
 }

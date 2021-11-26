@@ -12,7 +12,7 @@ class CalendarCreator {
       const numberOfDaysInMonth = monthToDaysMap.get(prevMonthNumber.toString());
       
       for (let i = 0; i <= leadingDays; i++) {
-        const prevMonthDay = new Date(Date.UTC(prevMonthYearNumber, prevMonthNumber, numberOfDaysInMonth - i, 0o0, 0o0, 0o0));
+        const prevMonthDay = new Date(prevMonthYearNumber, prevMonthNumber, numberOfDaysInMonth - i);
         monthDatesInWeeks[0][leadingDays - (i + 1)] = new CalendarDay(prevMonthDay);
       }
     }
@@ -25,7 +25,7 @@ class CalendarCreator {
       const [nextMonthNumber, nextMonthYearNumber] = CalendarMonth.getNextMonthData(lastDayOfMonth.month, lastDayOfMonth.year);
       
       for (let i = 1; i <= 6 - followingDays; i++) {
-        const nextMonthDay = new Date(Date.UTC(nextMonthYearNumber, nextMonthNumber, i, 0o0, 0o0, 0o0));
+        const nextMonthDay = new Date(nextMonthYearNumber, nextMonthNumber, i);
         monthDatesInWeeks[monthDatesInWeeks.length - 1][followingDays + i] = new CalendarDay(nextMonthDay);
       }
     }
@@ -46,8 +46,8 @@ class CalendarCreator {
     const datesInMonth: CalendarDay[] = [];
  
     for (let i = 1; i <= numberOfDaysInMonth; i++) {
-      let day = new Date(Date.UTC(year, month, i, 0o0, 0o0, 0o0));
-      day.setDate(i);
+      let day = new Date(year, month, i);
+      // day.setDate(i);
       let calendarDay = new CalendarDay(day);
       datesInMonth.push(calendarDay);
     }
@@ -106,6 +106,14 @@ class CalendarCreator {
     }
   
     return calendarMonths;
+  }
+
+  public static getWeekOfYear = (firstDayOfWeek: Date) => {
+    const oneJan = new Date(firstDayOfWeek.getFullYear(),0,1);
+    const numberOfDays = Math.floor((firstDayOfWeek.valueOf() - oneJan.valueOf()) / (24 * 60 * 60 * 1000));
+    const result = Math.ceil(( firstDayOfWeek.getDay() + 1 + numberOfDays) / 7);
+    console.log(`The week number of the current date (${firstDayOfWeek}) is ${result}.`);
+    return result;
   }
 
 }

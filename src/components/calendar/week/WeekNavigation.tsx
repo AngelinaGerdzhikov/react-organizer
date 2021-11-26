@@ -14,31 +14,53 @@ const WeekNavigation: React.FC<{ month: CalendarMonth; weekIndex: number }> = (
   const { month, year } = props.month;
 
   const getPreviousWeekHandler = () => {
-    if (props.month.monthDatesInWeeks[props.weekIndex - 1]) {
-      history.push(`/year/${year}/month/${month}/week/${props.weekIndex - 1}`);
-    } else {
-      const [updatedMonthNumber, updatedYearNumber] =
-        CalendarMonth.getPreviousMonthData(month, year);
-      const updatedYear = getYearFromStorage(updatedYearNumber);
-      const updatedWeekNumber =
+    const [updatedMonthNumber, updatedYearNumber] = CalendarMonth.getPreviousMonthData(month, year);
+    const updatedYear = getYearFromStorage(updatedYearNumber);
+    const updatedWeekNumber =
         updatedYear.calendarMonths[updatedMonthNumber].numberOfWeeksInMonth - 1;
-      history.push(
-        `/year/${updatedYearNumber}/month/${updatedMonthNumber}/week/${updatedWeekNumber}`
-      );
+
+    let url = ''
+
+    // Month has previous weeks
+    if (props.month.monthDatesInWeeks[props.weekIndex - 1]) {
+      url = `/year/${year}/month/${month}/week/${props.weekIndex - 1}`;
     }
+
+    // Month has no previous weeks and the dates in this week are only from this month
+    if (props.weekIndex === 0 && week.firstDayOfWeek.month === week.days[6].month) {
+      url = `/year/${updatedYearNumber}/month/${updatedMonthNumber}/week/${updatedWeekNumber}`;
+    }
+
+    // Month has no previous weeks but this week has dates from the previous month
+    if (props.weekIndex === 0 && week.firstDayOfWeek.month !== week.days[6].month) {
+      url = `/year/${updatedYearNumber}/month/${updatedMonthNumber}/week/${updatedWeekNumber - 1}`;
+    }
+
+    history.push(url);
   };
 
   const getNextWeekHandler = () => {
+    const [updatedMonthNumber, updatedYearNumber] = CalendarMonth.getNextMonthData(month, year);
+    getYearFromStorage(updatedYearNumber);
+
+    let url = '';
+
+    // Month has more weeks till the end of the month
     if (props.month.monthDatesInWeeks[props.weekIndex + 1]) {
-      history.push(`/year/${year}/month/${month}/week/${props.weekIndex + 1}`);
-    } else {
-      const [updatedMonthNumber, updatedYearNumber] =
-        CalendarMonth.getNextMonthData(month, year);
-      const updatedYear = getYearFromStorage(updatedYearNumber);
-      history.push(
-        `/year/${updatedYear.yearNumber}/month/${updatedMonthNumber}/week/0`
-      );
+      url = `/year/${year}/month/${month}/week/${props.weekIndex + 1}`;
     }
+
+    // This is the last week of the month and it has dates only from this month
+    if (week.firstDayOfWeek.month === week.days[6].month && !props.month.monthDatesInWeeks[props.weekIndex + 1]){
+      url = `/year/${updatedYearNumber}/month/${updatedMonthNumber}/week/0`;
+    }
+
+    // This is the last week of the month and it has dates from the next month
+    if (week.firstDayOfWeek.month !== week.days[6].month) {
+      url = `/year/${updatedYearNumber}/month/${updatedMonthNumber}/week/1`;
+    }   
+
+    history.push(url);
   };
 
   const getDateRangeJSX = () => {
