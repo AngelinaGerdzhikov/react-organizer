@@ -5,6 +5,7 @@ import { TASKS_API_PATH } from './config';
 
 export const getTasksByWeek = async (year: number, week: number): Promise<ICalendarItem[]> => {
   const response = await fetch(`${TASKS_API_PATH}/year/${year}/week/${week}`);
+
   let tasks: ICalendarItem[] = [];
   
   if (response) {

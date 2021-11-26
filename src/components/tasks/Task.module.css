@@ -11,10 +11,10 @@
   margin: 0;
   font-weight: 100;
   width: 80%;
-  white-space: nowrap;
+  /* white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  vertical-align: text-bottom;
+  text-overflow: ellipsis; */
+  /* vertical-align: text-bottom;  */
 }
 
 .task__title:hover {

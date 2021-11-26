@@ -5,13 +5,13 @@ import CalendarYear from "../../../models/calendar/calendar-year";
 
 const MonthListItem: React.FC<{ month: CalendarMonth, year: CalendarYear }> = (props) => {
   return (
-    <p className={classes.month}>
+    <section className={classes.month}>
       <h3 className={`${classes['month-name']} cursive`}>{props.month.monthFullName}</h3>
       <h5>{props.month.numberOfDaysInMonth} days</h5>
       <Link to={`/year/${props.year.yearNumber}/month/${props.month.month}`} className='btn'>
         View Month
       </Link>
-    </p>
+    </section>
   );
 };
 
