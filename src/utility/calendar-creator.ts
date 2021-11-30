@@ -108,12 +108,25 @@ class CalendarCreator {
     return calendarMonths;
   }
 
-  public static getWeekOfYear = (firstDayOfWeek: Date) => {
-    const oneJan = new Date(firstDayOfWeek.getFullYear(),0,1);
-    const numberOfDays = Math.floor((firstDayOfWeek.valueOf() - oneJan.valueOf()) / (24 * 60 * 60 * 1000));
-    const result = Math.ceil(( firstDayOfWeek.getDay() + 1 + numberOfDays) / 7);
-    console.log(`The week number of the current date (${firstDayOfWeek}) is ${result}.`);
+  public static getWeekOfYear = (day: Date) => {
+    const oneJan = new Date(day.getFullYear(),0,1);
+    const numberOfDays = Math.floor((day.valueOf() - oneJan.valueOf()) / (24 * 60 * 60 * 1000));
+    const result = Math.ceil(( day.getDay() + 1 + numberOfDays) / 7);
     return result;
+  }
+
+  public static getWeekOfMonthByDay = (day: Date, month: CalendarMonth): number => {
+    const dayOfMonth = day.getDate();
+
+    for ( let i = 0; i < month.monthDatesInWeeks.length; i++) {
+      for (let k = 0; k < 6; k++) {
+        if (month.monthDatesInWeeks[i].days[k].dayOfMonth === dayOfMonth) {
+          return i;
+        }
+      }
+    }
+
+    return -1;
   }
 
 }
